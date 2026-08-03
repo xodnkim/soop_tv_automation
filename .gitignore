@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+
+# Node / Tools
+node_modules/
+.DS_Store
+
+# Test Artifacts (영상 및 스크린샷 제외)
+test_results/
+*.avi
+*.png
+*.log
+
+# SSH Keys & Local Configs
+*.key
+*_webos
