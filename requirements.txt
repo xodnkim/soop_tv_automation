@@ -1,5 +1,5 @@
-pytest==8.2.2
-websocket-client
+pytest
 requests
+websocket-client
 opencv-python
 numpy

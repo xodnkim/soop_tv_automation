@@ -1,20 +1,27 @@
 """
 config.py
-- 환경별로 바뀔 수 있는 값들을 한 곳에 모아둔다 (TV IP, 앱 ID, 타임아웃 등).
-- 환경변수로 오버라이드 가능 -> CI에서 TV가 바뀌어도 코드 수정 없이 실행 가능.
+- TV / 환경별 설정값 통합 관리
+- TV_TYPE ("tizen" | "lg") 환경변수에 따라 타깃 플랫폼 전환
 """
 import os
 
-# ----- TV / 앱 -----
-TV_IP = os.environ.get("SOOP_TV_IP", "192.168.137.192")
-APP_ID = os.environ.get("SOOP_APP_ID", "SYhkcwoXQo.SOOPSTG")
+# ----- 타깃 플랫폼 선택 ("lg" 또는 "tizen") -----
+TV_TYPE = os.environ.get("TV_TYPE", "lg").lower()
+
+# ----- 삼성 Tizen 설정 -----
+TIZEN_IP = os.environ.get("SOOP_TV_IP", "192.168.137.192")
+TIZEN_APP_ID = os.environ.get("SOOP_APP_ID", "SYhkcwoXQo.SOOPSTG")
 SDB_PORT = 26101
 SDB_PATH = os.environ.get("SDB_PATH", r"D:\smarttv_auto\tools\sdb.exe")
 
+# ----- LG webOS 설정 -----
+LG_DEVICE_NAME = os.environ.get("LG_DEVICE_NAME", "LG_SMART")
+LG_APP_ID = os.environ.get("LG_APP_ID", "com.soop.stg.app")
+
 # ----- 타임아웃 -----
-SUBPROCESS_TIMEOUT_SEC = 10       # 개별 sdb 명령 타임아웃
-SETUP_TIMEOUT_SEC = int(os.environ.get("SOOP_SETUP_TIMEOUT", 60))  # 세션 준비 전체 타임아웃
-ELEMENT_WAIT_TIMEOUT = 10         # 요소 탐색 대기 타임아웃 (초)
+SUBPROCESS_TIMEOUT_SEC = 10
+SETUP_TIMEOUT_SEC = int(os.environ.get("SOOP_SETUP_TIMEOUT", 60))
+ELEMENT_WAIT_TIMEOUT = 10
 
 # ----- 출력 경로 -----
 OUTPUT_DIR = "test_results"
