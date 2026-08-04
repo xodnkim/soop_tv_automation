@@ -49,9 +49,27 @@ def driver():
 def _soft_reset_to_home(driver):
     try:
         driver.cdp.evaluate("window.location.reload();")
-        time.sleep(1.2)
+        # 리로드 후 홈 화면 h2가 나타날 때까지 대기 (요소 실제 렌더링 확인)
+        deadline = time.time() + 8
+        while time.time() < deadline:
+            time.sleep(0.5)
+            try:
+                val = driver.cdp.evaluate(
+                    '(function(){'
+                    'var el = document.evaluate("//h2[normalize-space()=\'홈\']",'
+                    ' document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;'
+                    'return el ? el.textContent : null;'
+                    '})()'
+                )
+                if val:
+                    break
+            except Exception:
+                pass
+        # 세션 복원(local storage → 니켌네임 버튼 갱신)이 완료될 때까지 추가 대기
+        time.sleep(2)
     except Exception as e:
         print(f"[SOFT RESET WARN] {e}")
+        time.sleep(3)  # 실패 시 fallback
 
 @pytest.fixture(autouse=True)
 def reset_to_home_between_tests(driver):

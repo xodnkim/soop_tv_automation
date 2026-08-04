@@ -11,8 +11,11 @@ from config import config
 
 
 class SoopDriver:
-    def __init__(self, port: int):
-        ws_url = get_page_ws_url(f"http://localhost:{port}")
+    def __init__(self, port_or_url):
+        if isinstance(port_or_url, str) and port_or_url.startswith("ws"):
+            ws_url = port_or_url
+        else:
+            ws_url = get_page_ws_url(f"http://localhost:{port_or_url}")
         self.cdp = CDPClient(ws_url)
         self.cdp.send("Page.enable")
         self.cdp.send("Runtime.enable")

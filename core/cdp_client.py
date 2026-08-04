@@ -10,13 +10,21 @@ import requests
 import websocket
 
 def get_page_ws_url(cdp_http_url: str) -> str:
-    resp = requests.get(f"{cdp_http_url}/json", timeout=5)
-    resp.raise_for_status()
-    targets = resp.json()
-    page_targets = [t for t in targets if t.get("type") == "page"]
-    if not page_targets:
-        raise RuntimeError(f"'{cdp_http_url}/json' 에서 page 타겟을 찾을 수 없습니다: {targets}")
-    return page_targets[0]["webSocketDebuggerUrl"]
+    start = time.time()
+    last_err = None
+    while time.time() - start < 15:
+        try:
+            resp = requests.get(f"{cdp_http_url}/json", timeout=5)
+            resp.raise_for_status()
+            targets = resp.json()
+            page_targets = [t for t in targets if t.get("type") == "page"]
+            if page_targets:
+                return page_targets[0]["webSocketDebuggerUrl"]
+        except Exception as e:
+            last_err = e
+        time.sleep(1)
+    
+    raise RuntimeError(f"'{cdp_http_url}/json' 에서 page 타겟을 찾을 수 없습니다 (Timeout 15s). Last error: {last_err}")
 
 class CDPClient:
     def __init__(self, ws_url: str, connect_timeout: float = 5.0):

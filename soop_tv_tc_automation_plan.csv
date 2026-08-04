@@ -1,0 +1,787 @@
+﻿,,,,,,,,,,,,,,
+,,Android TV 기본 기능 테스트 TC,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,No.,Title,Depth,,,Precondition,Step,Expected Result,P,TV,자동화 가능 여부,Policy,JIRA-Key,테스트케이스명 / 그룹화 파일명
+,,앱 실행,OS 홈,앱,-,앱 설치,[SOOP] 앱 실행,인트로 화면 로고 및 프로그래스 바 노출,,PASS,X,,,test_01_app_launch.py :: test_SOOP__앱_실행
+,,,,,,,,앱 메인 화면 진입,,PASS,O,,,test_01_app_launch.py
+,,,,,,,,리스트 로딩간 스켈레톤 UI 노출,,PASS,O,,,test_01_app_launch.py
+,,,,,,,,홈 메뉴 - 선호 LIVE 섹션 첫 번째 썸네일 포커스 (첫 화면),,PASS,O,,,test_01_app_launch.py
+,,로그인,LNB,로그인,-,-,[QR코드 스캔 후 완료] 버튼 클릭,QR코드 스캔 후 버튼을 클릭하라는 안내 얼럿 노출,,PASS,X,,,test_02_login_logout.py :: test_QR코드_스캔_후_완료__버튼_클릭
+,,,,,,,└ [확인] 버튼 클릭,안내 얼럿 닫히며 별도 액션 없음,,PASS,O,,,test_02_login_logout.py :: test_확인__버튼_클릭
+,,,,,,모바일 디바이스 준비,모바일 디바이스로 QR코드 스캔,모바일 앱에서 QR코드 로그인 완료 얼럿 노출,,PASS,X,스캔 후 완료 버튼 누르지 않아도 자동으로 로그인되게 정책 변경,,test_02_login_logout.py :: test_모바일_디바이스로_QR코드_스캔
+,,,,,,,QR코드 스캔 후 대기,로그인 완료 토스트 메시지 노출,,PASS,X,,,test_02_login_logout.py :: test_QR코드_스캔_후_대기
+,,,,,,,,로그인한 계정 프로필 / 닉네임 / ID 노출,,PASS,O,,,test_02_login_logout.py
+,,,,,,,,로그아웃 버튼 노출 및 포커스,,PASS,O,,,test_02_login_logout.py
+,,,LNB,내 프로필,-,-,[로그아웃] 버튼 클릭,로그아웃 컨펌 얼럿 노출,,PASS,O,,,test_02_login_logout.py :: test_로그아웃__버튼_클릭
+,,,,,,,└ [취소] 버튼 클릭,로그아웃 컨펌 얼럿 닫히며 별도 액션 없음,,PASS,O,,,test_02_login_logout.py :: test_취소__버튼_클릭
+,,,,,,,└ [확인] 버튼 클릭,로그아웃 완료 토스트 메시지 노출,,PASS,O,,,test_02_login_logout.py :: test_확인__버튼_클릭
+,,,,,,,,홈 메뉴 - LIVE 섹션 첫 번째 썸네일 포커스 (첫 화면),,PASS,O,,,test_02_login_logout.py
+,,,로그인,인증번호로그인,-,-,[인증번호 로그인] 버튼 클릭,인증번호 입력 화면 노출,,PASS,O,,,test_02_login_logout.py :: test_인증번호_로그인__버튼_클릭
+,,,,,,,,앱에서 내정보 > 인증번호에 표시된다는 안내 메시지 노출,,PASS,O,,,test_02_login_logout.py
+,,,,,,,,숫자 키패드 노출 및 숫자 1 포커스,,PASS,O,,,test_02_login_logout.py
+,,,,,,,모바일 디바이스 인증번호 확인 후 입력,"마지막 번호 입력 시, 키패드 미노출 및 [확인] 자동 포커스",,PASS,O,,,test_02_login_logout.py :: test_모바일_디바이스_인증번호_확인_후_입력
+,,,,,,,└ [확인] 버튼 클릭,로그인 완료 토스트 메시지 노출,,PASS,O,,,test_02_login_logout.py :: test_확인__버튼_클릭
+,,,,,,,,로그인한 계정 프로필 / 닉네임 / ID 노출,,PASS,O,,,test_02_login_logout.py
+,,,,,,,,로그아웃 버튼 노출 및 포커스,,PASS,O,,,test_02_login_logout.py
+,,,내 프로필,-,-,-,[로그아웃] 버튼 클릭,로그아웃 컨펌 얼럿 노출,,PASS,O,,,test_02_login_logout.py :: test_로그아웃__버튼_클릭
+,,,,,,,└ [확인] 버튼 클릭,로그아웃 완료 토스트 메시지 노출,,PASS,O,,,test_02_login_logout.py :: test_확인__버튼_클릭
+,,,,,,,,홈 메뉴 - LIVE 섹션 첫 번째 썸네일 포커스 (첫 화면),,PASS,O,,,test_02_login_logout.py
+,,,로그인,ID/PW로로그인,-,-,[ID/PW로 로그인] 버튼 클릭,아이디로 로그인 화면 노출,,PASS,O,,,test_02_login_logout.py :: test_ID_PW로_로그인__버튼_클릭
+,,,,,,,,아이디 입력 필드에 포커스,,PASS,O,,,test_02_login_logout.py
+,,,,,,,,키패드 노출,,PASS,O,,,test_02_login_logout.py
+,,,,,,,아이디 입력 후 키패드 엔터,비밀번호 입력 필드에 포커스,,PASS,O,,,test_02_login_logout.py :: test_아이디_입력_후_키패드_엔터
+,,,,,,,올바르지 않은 비밀번호 입력 후 엔터,로그인 버튼 하단에 잘못 입력했다는 안내 메시지 노출,,PASS,O,,,test_02_login_logout.py :: test_올바르지_않은_비밀번호_입력_후_엔터
+,,,,,,,올바른 비밀번호 입력 후 엔터,로그인 완료 토스트 메시지 노출,,PASS,O,,,test_02_login_logout.py :: test_올바른_비밀번호_입력_후_엔터
+,,,,,,,,로그인한 계정 프로필 / 닉네임 / ID 노출,,PASS,O,,,test_02_login_logout.py
+,,,,,,,,로그아웃 버튼 노출 및 포커스,,PASS,O,,,test_02_login_logout.py
+,,,,,,2차 비밀번호설정 케이스,올바른 비밀번호 입력 후 엔터,2차 비밀번호 입력 화면 노출,,PASS,O,,,test_02_login_logout.py :: test_올바른_비밀번호_입력_후_엔터
+,,,,,,,,2차 비밀번호 입력필드 포커스,,PASS,O,,,test_02_login_logout.py
+,,,,,,,올바르지 않은 비밀번호 입력 후 엔터,로그인 버튼 하단에 잘못 입력했다는 안내 메시지 노출,,PASS,O,,,test_02_login_logout.py :: test_올바르지_않은_비밀번호_입력_후_엔터
+,,,,,,,올바른 비밀번호 입력 후 엔터,로그인 완료 토스트 메시지 노출,,PASS,O,,,test_02_login_logout.py :: test_올바른_비밀번호_입력_후_엔터
+,,,,,,,,로그인한 계정 프로필 / 닉네임 / ID 노출,,PASS,O,,,test_02_login_logout.py
+,,,,,,,,로그아웃 버튼 노출 및 포커스,,PASS,O,,,test_02_login_logout.py
+,,검색,LNB,검색,-,-,검색 화면 진입 후 포커스 확인,검색 입력 필드 포커스 및 키패드 노출,,PASS,O,,,test_03_search.py :: test_검색_화면_진입_후_포커스_확인
+,,,,,,,└ 리모컨 BACK 키 클릭,키패드 닫힘,,PASS,O,,,test_03_search.py :: test_리모컨_BACK_키_클릭
+,,,검색,추천 영상,-,-,추천 영상 섹션 확인,추천 영상 VOD 리스트 노출,,PASS,O,,,test_03_search.py :: test_추천_영상_섹션_확인
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_03_search.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_03_search.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_03_search.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_03_search.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_03_search.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_03_search.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_03_search.py :: test_리모컨_BACK_키_클릭
+,,,검색,-,-,-,입력 필드에 임의 검색어 입력 후 엔터,검색 기록에 입력했던 검색어 노출,,PASS,O,,,test_03_search.py :: test_입력_필드에_임의_검색어_입력_후_엔터
+,,,,,,,,"LIVE 섹션에 LIVE 리스트 노출되며, 첫 번쨰 썸네일 포커스",,PASS,O,,,test_03_search.py
+,,,,,,,,VOD 섹션에 VOD 리스트 노출,,PASS,O,,,test_03_search.py
+,,,검색,LIVE,섹션,-,임의 LIVE 썸네일 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_03_search.py :: test_임의_LIVE_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_03_search.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_03_search.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_03_search.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_03_search.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_03_search.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_03_search.py :: test_리모컨_BACK_키_클릭
+,,,검색,LIVE,더보기,-,LIVE 리스트 맨 우측 이동,[LIVE 더보기] 버튼 노출,,PASS,O,,,test_03_search.py :: test_LIVE_리스트_맨_우측_이동
+,,,,,,,[LIVE 더보기] 버튼 클릭,LIVE 더보기 리스트 노출,,PASS,O,,,test_03_search.py :: test_LIVE_더보기__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,이전 화면 노출,,PASS,O,,,test_03_search.py :: test_리모컨_BACK_키_클릭
+,,,검색,VOD,섹션,-,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_03_search.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_03_search.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_03_search.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_03_search.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_03_search.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_03_search.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_03_search.py :: test_리모컨_BACK_키_클릭
+,,,검색,VOD,더보기,-,VOD 리스트 맨 우측 이동,[VOD 더보기] 버튼 노출,,PASS,O,,,test_03_search.py :: test_VOD_리스트_맨_우측_이동
+,,,,,,,[VOD 더보기] 버튼 클릭,VOD 더보기 리스트 노출,,PASS,O,,,test_03_search.py :: test_VOD_더보기__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,이전 화면 노출,,PASS,O,,,test_03_search.py :: test_리모컨_BACK_키_클릭
+,,,검색,-,-,-,[검색 기록 삭제] 버튼 클릭,검색 기록 삭제 컨펌 얼럿 노출,,PASS,O,,,test_03_search.py :: test_검색_기록_삭제__버튼_클릭
+,,,,,,,└ [확인] 버튼 클릭,"얼럿이 닫히며, 검색 기록 영역 미노출 및 입력필드 포커스",,PASS,O,,,test_03_search.py :: test_확인__버튼_클릭
+,,홈,LNB,홈,-,-,홈 메뉴 진입 시 포커스 확인,선호 LIVE 첫 번째 썸네일 포커스,,PASS,O,,,test_04_home_sections.py :: test_홈_메뉴_진입_시_포커스_확인
+,,,홈,선호 LIVE,섹션,-,선호 LIVE 섹션 확인,선호 LIVE 방송 리스트 노출,,PASS,O,,,test_04_home_sections.py :: test_선호_LIVE_섹션_확인
+,,,,,,,임의 LIVE 썸네일 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_임의_LIVE_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_04_home_sections.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,,[추천받지 않기] 버튼 및 [스트리머 숨기기] 버튼 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_04_home_sections.py :: test_나중에_보기__버튼_클릭
+,,,,,,,└ [추천받지 않기] 버튼 클릭,"썸네일에 안내 사항이 노출되며, [실행취소] 버튼에 포커스",,PASS,O,,,test_04_home_sections.py :: test_추천받지_않기__버튼_클릭
+,,,,,,,└ [실행취소] 버튼 클릭,썸네일 정상 노출,,PASS,O,,,test_04_home_sections.py :: test_실행취소__버튼_클릭
+,,,,,,,└ [스트리머 숨기기] 버튼 클릭,"썸네일에 안내 사항이 노출되며, [실행취소] 버튼에 포커스",,PASS,O,,,test_04_home_sections.py :: test_스트리머_숨기기__버튼_클릭
+,,,,,,,└ [실행취소] 버튼 클릭,썸네일 정상 노출,,PASS,O,,,test_04_home_sections.py :: test_실행취소__버튼_클릭
+,,,홈,인기 LIVE,섹션,-,인기 LIVE 섹션 확인,인기 LIVE 방송 리스트 노출,,PASS,O,,,test_04_home_sections.py :: test_인기_LIVE_섹션_확인
+,,,,,,,임의 LIVE 썸네일 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_임의_LIVE_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_04_home_sections.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,,[스트리머 숨기기] 버튼 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_04_home_sections.py :: test_나중에_보기__버튼_클릭
+,,,,,,,└ [스트리머 숨기기] 버튼 클릭,"썸네일에 안내 사항이 노출되며, [실행취소] 버튼에 포커스",,PASS,O,,,test_04_home_sections.py :: test_스트리머_숨기기__버튼_클릭
+,,,,,,,└ [실행취소] 버튼 클릭,썸네일 정상 노출,,PASS,O,,,test_04_home_sections.py :: test_실행취소__버튼_클릭
+,,,,,더보기,-,인기 LIVE 리스트 맨 우측 이동,[인기 LIVE 더보기] 버튼 노출,,PASS,O,,,test_04_home_sections.py :: test_인기_LIVE_리스트_맨_우측_이동
+,,,,,,,[인기 LIVE 더보기] 버튼 클릭,인기 LIVE 더보기 리스트 노출,,PASS,O,,,test_04_home_sections.py :: test_인기_LIVE_더보기__버튼_클릭
+,,,,,,,임의 LIVE 썸네일 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_임의_LIVE_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_04_home_sections.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,,[스트리머 숨기기] 버튼 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_04_home_sections.py :: test_나중에_보기__버튼_클릭
+,,,,,,,└ [스트리머 숨기기] 버튼 클릭,"썸네일에 안내 사항이 노출되며, [실행취소] 버튼에 포커스",,PASS,O,,,test_04_home_sections.py :: test_스트리머_숨기기__버튼_클릭
+,,,,,,,└ [실행취소] 버튼 클릭,썸네일 정상 노출,,PASS,O,,,test_04_home_sections.py :: test_실행취소__버튼_클릭
+,,,홈,인기 유저 클립,섹션,-,인기 유저 클립 섹션 확인,인기 유저 클립 VOD 리스트 노출,,PASS,O,,,test_04_home_sections.py :: test_인기_유저_클립_섹션_확인
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_04_home_sections.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 / 원저작자 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_04_home_sections.py :: test_나중에_보기__버튼_클릭
+,,,,,더보기,-,인기 유저 클립 리스트 맨 우측 이동,[인기 유저 클립 더보기] 버튼 노출,,PASS,O,,,test_04_home_sections.py :: test_인기_유저_클립_리스트_맨_우측_이동
+,,,,,,,[인기 유저 클립 더보기] 버튼 클릭,인기 유저 클립 더보기 리스트 노출,,PASS,O,,,test_04_home_sections.py :: test_인기_유저_클립_더보기__버튼_클릭
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_04_home_sections.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 / 원저작자 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,홈,인기 업로드 VOD,섹션,-,인기 업로드 VOD 섹션 확인,인기 업로드 VOD 리스트 노출,,PASS,O,,,test_04_home_sections.py :: test_인기_업로드_VOD_섹션_확인
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_04_home_sections.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_04_home_sections.py :: test_나중에_보기__버튼_클릭
+,,,,,더보기,-,인기 업로드 VOD 리스트 맨 우측 이동,[인기 업로드 VOD 더보기] 버튼 노출,,PASS,O,,,test_04_home_sections.py :: test_인기_업로드_VOD_리스트_맨_우측_이동
+,,,,,,,[인기 업로드 VOD 더보기] 버튼 클릭,인기 업로드 VOD 더보기 리스트 노출,,PASS,O,,,test_04_home_sections.py :: test_인기_업로드_VOD_더보기__버튼_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_04_home_sections.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_04_home_sections.py :: test_나중에_보기__버튼_클릭
+,,,홈,인기 다시보기,섹션,-,인기 다시보기 섹션 확인,인기 다시보기 VOD 리스트 노출,,PASS,O,,,test_04_home_sections.py :: test_인기_다시보기_섹션_확인
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_04_home_sections.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_04_home_sections.py :: test_나중에_보기__버튼_클릭
+,,,,,더보기,-,인기 다시보기 리스트 맨 우측 이동,[인기 다시보기 더보기] 버튼 노출,,PASS,O,,,test_04_home_sections.py :: test_인기_다시보기_리스트_맨_우측_이동
+,,,,,,,[인기 다시보기 더보기] 버튼 클릭,인기 다시보기 더보기 리스트 노출,,PASS,O,,,test_04_home_sections.py :: test_인기_다시보기_더보기__버튼_클릭
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_04_home_sections.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_04_home_sections.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_04_home_sections.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_04_home_sections.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_04_home_sections.py :: test_나중에_보기__버튼_클릭
+,,LIVE,LIVE,상단 카테고리,-,-,"메뉴 진입 시, 포커스 확인",[전체] 카테고리 포커스,,PASS,O,,,test_05_live_menu.py :: test_메뉴_진입_시__포커스_확인
+,,,,,,,상단 카테고리 리스트 확인,최대 50개의 LIVE 카테고리 노출,,PASS,O,,,test_05_live_menu.py :: test_상단_카테고리_리스트_확인
+,,,,,,,마지막 카테고리에서 리모컨 우측 클릭,맨 앞 [전체] 카테고리로 포커스 복귀,,PASS,O,,,test_05_live_menu.py :: test_마지막_카테고리에서_리모컨_우측_클릭
+,,,,,더보기,-,임의 카테고리 클릭,해당 카테고리의 더보기 리스트 노출,,PASS,O,,,test_05_live_menu.py :: test_임의_카테고리_클릭
+,,,,,,,임의 LIVE 썸네일 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_05_live_menu.py :: test_임의_LIVE_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_05_live_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_05_live_menu.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_05_live_menu.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_05_live_menu.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_05_live_menu.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_05_live_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_05_live_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,,,└ [스트리머 숨기기] 버튼 클릭,"썸네일에 안내 사항이 노출되며, [실행취소] 버튼에 포커스",,PASS,O,,,test_05_live_menu.py :: test_스트리머_숨기기__버튼_클릭
+,,,,,,,└ [실행취소] 버튼 클릭,썸네일 정상 노출,,PASS,O,,,test_05_live_menu.py :: test_실행취소__버튼_클릭
+,,,LIVE,카테고리,섹션,-,임의 카테고리 섹션 확인,해당 카테고리 LIVE 리스트 노출,,PASS,O,,,test_05_live_menu.py :: test_임의_카테고리_섹션_확인
+,,,,,,,임의 LIVE 썸네일 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_05_live_menu.py :: test_임의_LIVE_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_05_live_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_05_live_menu.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_05_live_menu.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_05_live_menu.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_05_live_menu.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_05_live_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_05_live_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,,,└ [스트리머 숨기기] 버튼 클릭,"썸네일에 안내 사항이 노출되며, [실행취소] 버튼에 포커스",,PASS,O,,,test_05_live_menu.py :: test_스트리머_숨기기__버튼_클릭
+,,,,,,,└ [실행취소] 버튼 클릭,썸네일 정상 노출,,PASS,O,,,test_05_live_menu.py :: test_실행취소__버튼_클릭
+,,,,,,,50번 쨰 섹션 최하단 이동,최하단 카테고리 섹션에 LIVE 리스트 노출,,PASS,O,,,test_05_live_menu.py :: test_50번_쨰_섹션_최하단_이동
+,,VOD,VOD,상단 카테고리,-,-,"메뉴 진입 시, 포커스 확인",[전체] 카테고리 포커스,,PASS,O,,,test_06_vod_menu.py :: test_메뉴_진입_시__포커스_확인
+,,,,,,,상단 카테고리 리스트 확인,최대 50개의 VOD 카테고리 노출,,PASS,O,,,test_06_vod_menu.py :: test_상단_카테고리_리스트_확인
+,,,,,,,마지막 카테고리에서 리모컨 우측 클릭,맨 앞 [전체] 카테고리로 포커스 복귀,,PASS,O,,,test_06_vod_menu.py :: test_마지막_카테고리에서_리모컨_우측_클릭
+,,,,,더보기,-,임의 카테고리 클릭,해당 카테고리의 더보기 리스트 노출,,PASS,O,,,test_06_vod_menu.py :: test_임의_카테고리_클릭
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_06_vod_menu.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_06_vod_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_06_vod_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_06_vod_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_06_vod_menu.py
+,,,,,,,└ [재생] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_06_vod_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_06_vod_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_06_vod_menu.py :: test_나중에_보기__버튼_클릭
+,,,VOD,카테고리,섹션,-,임의 카테고리 섹션 확인,해당 카테고리 VOD 리스트 노출,,PASS,O,,,test_06_vod_menu.py :: test_임의_카테고리_섹션_확인
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_06_vod_menu.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_06_vod_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_06_vod_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_06_vod_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_06_vod_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_06_vod_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_06_vod_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_06_vod_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,,,50번 쨰 섹션 최하단 이동,최하단 카테고리 섹션에 VOD 리스트 노출,,PASS,O,,,test_06_vod_menu.py :: test_50번_쨰_섹션_최하단_이동
+,,eSports,eSports,상단 카테고리,-,-,"메뉴 진입 시, 포커스 확인",첫 번째 카테고리 포커스,,PASS,O,20260703 기준 MSI,,test_07_esports_menu.py :: test_메뉴_진입_시__포커스_확인
+,,,,,,,상단 카테고리 리스트 확인,모든 eSports 카테고리 리스트 노출,,PASS,O,,,test_07_esports_menu.py :: test_상단_카테고리_리스트_확인
+,,,,,,,마지막 카테고리에서 리모컨 우측 클릭,맨 앞 첫 번째 카테고리로 포커스 복귀,,PASS,O,,,test_07_esports_menu.py :: test_마지막_카테고리에서_리모컨_우측_클릭
+,,,,,더보기,-,임의 카테고리 클릭,해당 카테고리의 시즌별 리스트 노출,,PASS,O,,,test_07_esports_menu.py :: test_임의_카테고리_클릭
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_07_esports_menu.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_07_esports_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_07_esports_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_07_esports_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_07_esports_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_07_esports_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_07_esports_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_07_esports_menu.py :: test_나중에_보기__버튼_클릭
+,,,eSports,카테고리,섹션,-,임의 e스포츠 종목 섹션 확인,해당 카테고리 VOD 리스트 노출,,PASS,O,,,test_07_esports_menu.py :: test_임의_e스포츠_종목_섹션_확인
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_07_esports_menu.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_07_esports_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_07_esports_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_07_esports_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_07_esports_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_07_esports_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_07_esports_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_07_esports_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,,,섹션 최하단 이동,최하단 e스포츠 종목 섹션에 VOD 리스트 노출,,PASS,O,,,test_07_esports_menu.py :: test_섹션_최하단_이동
+,,,eSports,카테고리 상세,,,상단 e스포츠 종목 선택,e스포츠 종목 중 가장 최근 시즌의 필터로 소팅되어 노출됨,,PASS,O,,,test_07_esports_menu.py :: test_상단_e스포츠_종목_선택
+,,,,,,,,해당 시즌의 관련 VOD 노출됨,,PASS,O,,,test_07_esports_menu.py
+,,,,,시즌,,상단 우측 시즌 필터 선택,e스포츠 관련 종목 시즌 필터 항목 노출됨예): LCK 정규 시즌,,PASS,O,,,test_07_esports_menu.py :: test_상단_우측_시즌_필터_선택
+,,,,,,,,시즌 선택 시 시즌 관련 영상으로 소팅되어 노출됨,,PASS,O,,,test_07_esports_menu.py
+,,,,,전체,,상단 영상 유형 필터 선택,영상 유형의 필터 항목 노출됨전체다시보기Catch주요장면인터뷰프리뷰특집영상기타,,PASS,O,MSI 로 확인,,test_07_esports_menu.py :: test_상단_영상_유형_필터_선택
+,,,,,,,,영상 유형 필터 선택 시 분류에 맞게 소팅되어 노출됨,,PASS,O,,,test_07_esports_menu.py
+,,MY,MY,즐겨찾기 전체,섹션,-,즐겨찾기 전체 섹션 확인,섹션 타이틀 우측 즐겨찾기 스트리머 총 인원 노출,,PASS,O,{n}명,,test_08_my_menu.py :: test_즐겨찾기_전체_섹션_확인
+,,,,,,,,스트리머 프로필 이미지 / 닉네임 / ID 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,최근 방송 시작 시간 노출,,PASS,O,{n}{시간/일/개월/년} 전,,test_08_my_menu.py
+,,,,,,,임의 스트리머 프로필 클릭,우측에 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_스트리머_프로필_클릭
+,,,,,,,,스트리머 프로필 이미지 / 닉네임 / ID 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,방송 중인 경우 [LIVE 참여] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[즐겨찾기 삭제] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [즐겨찾기 삭제] 버튼 클릭,"리스트 새로고침되며, 즐겨찾기 삭제 안내 토스트 메시지 노출",,PASS,O,,,test_08_my_menu.py :: test_즐겨찾기_삭제__버튼_클릭
+,,,,,더보기,-,즐겨찾기 전체 리스트 맨 우측 이동,[즐겨찾기 전체 더보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py :: test_즐겨찾기_전체_리스트_맨_우측_이동
+,,,,,,,[즐겨찾기 전체 더보기] 버튼 클릭,즐겨찾기 전체 더보기 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_즐겨찾기_전체_더보기__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 스트리머 프로필 클릭,우측에 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_스트리머_프로필_클릭
+,,,,,,,,스트리머 프로필 이미지 / 닉네임 / ID 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,방송 중인 경우 [LIVE 참여] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[즐겨찾기 삭제] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [즐겨찾기 삭제] 버튼 클릭,"리스트 새로고침되며, 즐겨찾기 삭제 안내 토스트 메시지 노출",,PASS,O,,,test_08_my_menu.py :: test_즐겨찾기_삭제__버튼_클릭
+,,,MY,구독한 스트리머의 LIVE,섹션,-,구독한 스트리머의 LIVE 섹션 확인,구독한 스트리머의 LIVE 방송 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_구독한_스트리머의_LIVE_섹션_확인
+,,,,,,,임의 LIVE 썸네일 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,더보기,-,섹션 리스트 맨 우측 이동,[구독한 스트리머의 LIVE 더보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py :: test_섹션_리스트_맨_우측_이동
+,,,,,,,더보기 버튼 클릭,구독한 스트리머의 LIVE 더보기 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_더보기_버튼_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,MY,구독한 스트리머의 VOD,섹션,-,구독한 스트리머의 VOD 섹션 확인,구독한 스트리머의 VOD 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_구독한_스트리머의_VOD_섹션_확인
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,더보기,-,섹션 리스트 맨 우측 이동,[구독한 스트리머의 VOD 더보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py :: test_섹션_리스트_맨_우측_이동
+,,,,,,,더보기 버튼 클릭,구독한 스트리머의 유저클립 더보기 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_더보기_버튼_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,MY,즐겨찾기한 스트리머의 LIVE,섹션,-,즐겨찾기한 스트리머의 LIVE 섹션 확인,즐겨찾기한 스트리머의 LIVE 방송 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_즐겨찾기한_스트리머의_LIVE_섹션_확인
+,,,,,,,임의 LIVE 썸네일 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,더보기,-,섹션 리스트 맨 우측 이동,[즐겨찾기한 스트리머의 LIVE 더보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py :: test_섹션_리스트_맨_우측_이동
+,,,,,,,더보기 버튼 클릭,즐겨찾기한 스트리머의 LIVE 더보기 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_더보기_버튼_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,MY,즐겨찾기한 스트리머의 유저클립,섹션,-,즐겨찾기한 스트리머의 유저클립 섹션 확인,즐겨찾기한 스트리머의 유저클립 VOD 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_즐겨찾기한_스트리머의_유저클립_섹션_확인
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 / 원저작자 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,,,정렬 기준 확인,최신순으로 정렬되어 노출됨,,PASS,O,,,test_08_my_menu.py :: test_정렬_기준_확인
+,,,,,더보기,-,섹션 리스트 맨 우측 이동,[즐겨찾기한 스트리머의 유저클립 더보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py :: test_섹션_리스트_맨_우측_이동
+,,,,,,,더보기 버튼 클릭,즐겨찾기한 스트리머의 유저클립 더보기 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_더보기_버튼_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 / 원저작자 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,,,정렬 기준 확인,최신순으로 정렬되어 노출됨,,PASS,O,,,test_08_my_menu.py :: test_정렬_기준_확인
+,,,MY,즐겨찾기한 스트리머의 VOD,섹션,-,즐겨찾기한 스트리머의 VOD 섹션 확인,즐겨찾기한 스트리머의 VOD 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_즐겨찾기한_스트리머의_VOD_섹션_확인
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,,,정렬 기준 확인,최신순으로 정렬되어 노출됨,,PASS,O,,,test_08_my_menu.py :: test_정렬_기준_확인
+,,,,,,,영상 유형 확인,유저클립 유형은 노출되지 않음,,PASS,O,,,test_08_my_menu.py :: test_영상_유형_확인
+,,,,,더보기,-,섹션 리스트 맨 우측 이동,[즐겨찾기한 스트리머의 VOD 더보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py :: test_섹션_리스트_맨_우측_이동
+,,,,,,,더보기 버튼 클릭,즐겨찾기한 스트리머의 유저클립 더보기 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_더보기_버튼_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,,,정렬 기준 확인,최신순으로 정렬되어 노출됨,,PASS,O,,,test_08_my_menu.py :: test_정렬_기준_확인
+,,,,,,,영상 유형 확인,유저클립 유형은 노출되지 않음,,PASS,O,,,test_08_my_menu.py :: test_영상_유형_확인
+,,,MY,팬가입한 스트리머의 LIVE,섹션,-,팬가입한 스트리머의 LIVE 섹션 확인,팬가입한 스트리머의 LIVE 방송 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_팬가입한_스트리머의_LIVE_섹션_확인
+,,,,,,,임의 LIVE 썸네일 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,더보기,-,섹션 리스트 맨 우측 이동,[팬가입한 스트리머의 LIVE 더보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py :: test_섹션_리스트_맨_우측_이동
+,,,,,,,더보기 버튼 클릭,팬가입한 스트리머의 LIVE 더보기 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_더보기_버튼_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,MY,팬가입한 스트리머의 VOD,섹션,-,팬가입한 스트리머의 VOD 섹션 확인,팬가입한 스트리머의 VOD 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_팬가입한_스트리머의_VOD_섹션_확인
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,더보기,-,섹션 리스트 맨 우측 이동,[팬가입한 스트리머의 VOD 더보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py :: test_섹션_리스트_맨_우측_이동
+,,,,,,,더보기 버튼 클릭,팬가입한 스트리머의 유저클립 더보기 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_더보기_버튼_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,MY,최근 본 스트리머의 LIVE,섹션,-,최근 본 스트리머의 LIVE 섹션 확인,최근 본 스트리머의 LIVE 방송 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_최근_본_스트리머의_LIVE_섹션_확인
+,,,,,,,임의 LIVE 썸네일 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,더보기,-,섹션 리스트 맨 우측 이동,[최근 본 스트리머의 LIVE 더보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py :: test_섹션_리스트_맨_우측_이동
+,,,,,,,더보기 버튼 클릭,최근 본 스트리머의 LIVE 더보기 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_더보기_버튼_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,MY,최근 본 VOD,섹션,-,최근 본 VOD 섹션 확인,최근 본 VOD 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_최근_본_VOD_섹션_확인
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,더보기,-,섹션 리스트 맨 우측 이동,[최근 본 VOD 더보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py :: test_섹션_리스트_맨_우측_이동
+,,,,,,,[최근 본 VOD] 더보기 버튼 클릭,최근 본 VOD 더보기 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_최근_본_VOD__더보기_버튼_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,MY,즐겨찾기할 만한 스트리머,섹션,-,즐겨찾기할 만한 스트리머 섹션 확인,즐겨찾기할 만한 스트리머 방송 리스트 노출,,PASS,X,,,test_08_my_menu.py :: test_즐겨찾기할_만한_스트리머_섹션_확인
+,,,,,,,임의 LIVE 썸네일 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 LIVE 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[LIVE 참여] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [LIVE 참여] 버튼 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_LIVE_참여__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,MY,나중에 보기,섹션,-,나중에 보기 섹션 확인,나중에 보기 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기_섹션_확인
+,,,,,,,임의 LIVE 또는 VOD 썸네일 클릭,플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_임의_LIVE_또는_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[LIVE 참여 or 재생] 버튼 및 [나중에 보기 삭제] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [LIVE 참여 or 재생] 버튼 클릭,플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_LIVE_참여_or_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기 삭제] 버튼 클릭,리스트 새로고침되며 나중에 보기 삭제 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기_삭제__버튼_클릭
+,,,,,더보기,-,섹션 리스트 맨 우측 이동,[나중에 보기 더보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py :: test_섹션_리스트_맨_우측_이동
+,,,,,,,[나중에 보기] 더보기 버튼 클릭,나중에 보기 더보기 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__더보기_버튼_클릭
+,,,,,,,임의 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[LIVE 참여 or 재생] 버튼 및 [나중에 보기 삭제] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [LIVE 참여 or 재생] 버튼 클릭,플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_LIVE_참여_or_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기삭제 ] 버튼 클릭,리스트 새로고침되며 나중에 보기 삭제 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기삭제___버튼_클릭
+,,,MY,UP한 VOD,섹션,-,UP한 VOD 섹션 확인,UP한 VOD 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_UP한_VOD_섹션_확인
+,,,,,,,임의 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,,,,더보기,-,섹션 리스트 맨 우측 이동,[UP한 VOD 더보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py :: test_섹션_리스트_맨_우측_이동
+,,,,,,,[UP한 VOD] 더보기 버튼 클릭,UP한 VOD 더보기 리스트 노출,,PASS,O,,,test_08_my_menu.py :: test_UP한_VOD__더보기_버튼_클릭
+,,,,,,,임의 VOD 썸네일 롱프레스,우측에 롱프레스 더보기 메뉴 노출,,PASS,O,,,test_08_my_menu.py :: test_임의_VOD_썸네일_롱프레스
+,,,,,,,,썸네일 / 타이틀 / 프로필 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,,[재생] 버튼 및 [나중에 보기] 버튼 노출,,PASS,O,,,test_08_my_menu.py
+,,,,,,,└ [재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_08_my_menu.py :: test_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_08_my_menu.py :: test_리모컨_BACK_키_클릭
+,,,,,,,└ [나중에 보기] 버튼 클릭,나중에 보기 추가 안내 토스트 메시지 노출,,PASS,O,,,test_08_my_menu.py :: test_나중에_보기__버튼_클릭
+,,설정,설정,언어설정,,,메뉴 진입 시 디폴트 포커스 확인,언어설정,,PASS,O,,,test_09_settings.py :: test_메뉴_진입_시_디폴트_포커스_확인
+,,,,채팅 번역 설정,,,ㄴ언어변경,"영어, 중국어,(간체,번체), 태국어",,PASS,O,,,test_09_settings.py :: test_언어변경
+,,,,-,-,-,메뉴 진입 시 디폴트 포커스 확인,[미리보기 설정] 포커스,,PASS,O,,,test_09_settings.py :: test_메뉴_진입_시_디폴트_포커스_확인
+,,,,,,,,좌측에 안내 문구 및 [ON]. [OFF] 버튼 노출,,PASS,O,디폴트 설정값 : ON,,test_09_settings.py
+,,,,미리보기 설정,-,-,[미리보기 설정] 클릭,좌측 미리보기 설정의 [ON] 버튼 포커스,,PASS,O,,,test_09_settings.py :: test_미리보기_설정__클릭
+,,,,,,,└ [OFF] 버튼 포커스 후 클릭,[OFF] 버튼 내 우측에 체크박스 표시 노출되며 설정값 적용,,PASS,O,,,test_09_settings.py :: test_OFF__버튼_포커스_후_클릭
+,,,,모바일 앱,-,-,[모바일 앱] 메뉴 포커스,"좌측에 안내 문구 및 Android, iOS QR 코드 노출",,PASS,X,,,test_09_settings.py :: test_모바일_앱__메뉴_포커스
+,,,,이용약관,-,-,[이용약관] 메뉴 포커스,좌측에 안내 문구 및 QR 코드 노출,,PASS,X,,,test_09_settings.py :: test_이용약관__메뉴_포커스
+,,,,고객센터,-,-,[고객센터] 메뉴 포커스,좌측에 안내 문구 및 QR 코드 노출,,PASS,X,,,test_09_settings.py :: test_고객센터__메뉴_포커스
+,,,,오픈소스 정보,-,-,[오픈소스 정보] 메뉴 포커스,좌측에 오픈소스 리스트 노출,,PASS,O,,,test_09_settings.py :: test_오픈소스_정보__메뉴_포커스
+,,,,,,,└ [오픈소스 정보] 메뉴 클릭,첫 번째 오픈소스 리스트에 포커스되며 리스트 탐색 가능,,PASS,O,,,test_09_settings.py :: test_오픈소스_정보__메뉴_클릭
+,,,,앱 정보,-,-,[앱 정보] 메뉴 포커스,SOOP 로고 및 앱 버전 노출,,PASS,O,,,test_09_settings.py :: test_앱_정보__메뉴_포커스
+,,리스트 미리보기,로그인,ID/PW로 로그인,-,-,퀵뷰 플러스 아이디/비밀번호 입력 후 엔터,로그인 완료 토스트 메시지 노출,,PASS,O,,,test_10_list_preview.py :: test_퀵뷰_플러스_아이디_비밀번호_입력_후_엔터
+,,,설정,미리보기 설정,-,-,미리보기 설정 [ON] 버튼 클릭,[ON] 버튼 내 우측에 체크박스 표시 노출되며 설정값 적용,,PASS,O,,,test_10_list_preview.py :: test_미리보기_설정__ON__버튼_클릭
+,,,홈,선호 LIVE,-,-,임의 썸네일 포커스,"약 1.5초 후, 썸네일 우측 하단에 로딩 인디케이터 노출",,PASS,O,,,test_10_list_preview.py :: test_임의_썸네일_포커스
+,,,,,,,,"로딩 후, 20초간 LIVE 시점 리스트 미리보기 재생",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 미리보기 재생 확인,"오디오, 비디오 싱크 체크",,PASS,X,,,test_10_list_preview.py :: test_리스트_미리보기_재생_확인
+,,,,,,,,"20초간 재생 후, 재생 종료되며 기존 썸네일로 복귀",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 재생 중 다른 썸네일 포커스,리스트 재생 종료되며 다른 썸네일로 포커스 이동,,PASS,O,,,test_10_list_preview.py :: test_리스트_재생_중_다른_썸네일_포커스
+,,,,,,,리스트 재생 중 썸네일 클릭,리스트 재생 종료되며 방송 참여,,PASS,O,,,test_10_list_preview.py :: test_리스트_재생_중_썸네일_클릭
+,,,,,,,리스트 재생 중 썸네일 롱프레스,리스트 재생 종료되며 더보기 메뉴 노출,,PASS,O,,,test_10_list_preview.py :: test_리스트_재생_중_썸네일_롱프레스
+,,,홈,인기 LIVE,-,-,임의 썸네일 포커스,"약 1.5초 후, 썸네일 우측 하단에 로딩 인디케이터 노출",,PASS,O,,,test_10_list_preview.py :: test_임의_썸네일_포커스
+,,,,,,,,"로딩 후, 20초간 LIVE 시점 리스트 미리보기 재생",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 미리보기 재생 확인,"오디오, 비디오 싱크 체크",,PASS,X,,,test_10_list_preview.py :: test_리스트_미리보기_재생_확인
+,,,,,,,,"20초간 재생 후, 재생 종료되며 기존 썸네일로 복귀",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 재생 중 다른 썸네일 포커스,리스트 재생 종료되며 다른 썸네일로 포커스 이동,,PASS,O,,,test_10_list_preview.py :: test_리스트_재생_중_다른_썸네일_포커스
+,,,,,,,리스트 재생 중 썸네일 클릭,리스트 재생 종료되며 방송 참여,,PASS,O,,,test_10_list_preview.py :: test_리스트_재생_중_썸네일_클릭
+,,,,,,,리스트 재생 중 썸네일 롱프레스,리스트 재생 종료되며 더보기 메뉴 노출,,PASS,O,,,test_10_list_preview.py :: test_리스트_재생_중_썸네일_롱프레스
+,,,홈,인기 유저 클립,,-,임의 썸네일 포커스,"약 1.5초 후, 썸네일 우측 하단에 로딩 인디케이터 노출",,PASS,O,,,test_10_list_preview.py :: test_임의_썸네일_포커스
+,,,,,,,,"로딩 후, 20초간 LIVE 시점 리스트 미리보기 재생",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 미리보기 재생 확인,영상 길이 역카운트,,PASS,O,,,test_10_list_preview.py :: test_리스트_미리보기_재생_확인
+,,,,,,,,"오디오, 비디오 싱크 체크",,PASS,X,,,test_10_list_preview.py
+,,,,,,,,"20초간 재생 후, 재생 종료되며 기존 썸네일로 복귀",,PASS,O,,,test_10_list_preview.py
+,,,홈,인기 다시보기,,-,임의 썸네일 포커스,"약 1.5초 후, 썸네일 우측 하단에 로딩 인디케이터 노출",,PASS,O,,,test_10_list_preview.py :: test_임의_썸네일_포커스
+,,,,,,,,"로딩 후, 20초간 LIVE 시점 리스트 미리보기 재생",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 미리보기 재생 확인,영상 길이 역카운트,,PASS,O,,,test_10_list_preview.py :: test_리스트_미리보기_재생_확인
+,,,,,,,,"오디오, 비디오 싱크 체크",,PASS,X,,,test_10_list_preview.py
+,,,,,,,,"20초간 재생 후, 재생 종료되며 기존 썸네일로 복귀",,PASS,O,,,test_10_list_preview.py
+,,,LIVE,임의 카테고리,섹션,-,임의 썸네일 포커스,"약 1.5초 후, 썸네일 우측 하단에 로딩 인디케이터 노출",,PASS,O,,,test_10_list_preview.py :: test_임의_썸네일_포커스
+,,,,,,,,"로딩 후, 20초간 LIVE 시점 리스트 미리보기 재생",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 미리보기 재생 확인,"오디오, 비디오 싱크 체크",,PASS,X,,,test_10_list_preview.py :: test_리스트_미리보기_재생_확인
+,,,,,,,,"20초간 재생 후, 재생 종료되며 기존 썸네일로 복귀",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 재생 중 다른 썸네일 포커스,리스트 재생 종료되며 다른 썸네일로 포커스 이동,,PASS,O,,,test_10_list_preview.py :: test_리스트_재생_중_다른_썸네일_포커스
+,,,,,,,리스트 재생 중 썸네일 클릭,리스트 재생 종료되며 방송 참여,,PASS,O,,,test_10_list_preview.py :: test_리스트_재생_중_썸네일_클릭
+,,,,,더보기,-,임의 썸네일 포커스,"약 1.5초 후, 썸네일 우측 하단에 로딩 인디케이터 노출",,PASS,O,,,test_10_list_preview.py :: test_임의_썸네일_포커스
+,,,,,,,,"로딩 후, 20초간 LIVE 시점 리스트 미리보기 재생",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 미리보기 재생 확인,"오디오, 비디오 싱크 체크",,PASS,X,,,test_10_list_preview.py :: test_리스트_미리보기_재생_확인
+,,,,,,,,"20초간 재생 후, 재생 종료되며 기존 썸네일로 복귀",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 재생 중 다른 썸네일 포커스,리스트 재생 종료되며 다른 썸네일로 포커스 이동,,PASS,O,,,test_10_list_preview.py :: test_리스트_재생_중_다른_썸네일_포커스
+,,,,,,,리스트 재생 중 썸네일 클릭,리스트 재생 종료되며 방송 참여,,PASS,O,,,test_10_list_preview.py :: test_리스트_재생_중_썸네일_클릭
+,,,VOD,임의 카테고리,섹션,-,임의 썸네일 포커스,"약 1.5초 후, 썸네일 우측 하단에 로딩 인디케이터 노출",,PASS,O,,,test_10_list_preview.py :: test_임의_썸네일_포커스
+,,,,,,,,"로딩 후, 20초간 LIVE 시점 리스트 미리보기 재생",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 미리보기 재생 확인,영상 길이 역카운트,,PASS,O,,,test_10_list_preview.py :: test_리스트_미리보기_재생_확인
+,,,,,,,,"오디오, 비디오 싱크 체크",,PASS,X,,,test_10_list_preview.py
+,,,,,,,,"20초간 재생 후, 재생 종료되며 기존 썸네일로 복귀",,PASS,O,,,test_10_list_preview.py
+,,,,,더보기,-,임의 썸네일 포커스,"약 1.5초 후, 썸네일 우측 하단에 로딩 인디케이터 노출",,PASS,O,,,test_10_list_preview.py :: test_임의_썸네일_포커스
+,,,,,,,,"로딩 후, 20초간 LIVE 시점 리스트 미리보기 재생",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 미리보기 재생 확인,영상 길이 역카운트,,PASS,O,,,test_10_list_preview.py :: test_리스트_미리보기_재생_확인
+,,,,,,,,"오디오, 비디오 싱크 체크",,PASS,X,,,test_10_list_preview.py
+,,,,,,,,"20초간 재생 후, 재생 종료되며 기존 썸네일로 복귀",,PASS,O,,,test_10_list_preview.py
+,,,eSports,임의 카테고리,섹션,-,임의 썸네일 포커스,"약 1.5초 후, 썸네일 우측 하단에 로딩 인디케이터 노출",,PASS,O,,,test_10_list_preview.py :: test_임의_썸네일_포커스
+,,,,,,,,"로딩 후, 20초간 LIVE 시점 리스트 미리보기 재생",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 미리보기 재생 확인,영상 길이 역카운트,,PASS,O,,,test_10_list_preview.py :: test_리스트_미리보기_재생_확인
+,,,,,,,,"오디오, 비디오 싱크 체크",,PASS,X,,,test_10_list_preview.py
+,,,,,,,,"20초간 재생 후, 재생 종료되며 기존 썸네일로 복귀",,PASS,O,,,test_10_list_preview.py
+,,,,,더보기,-,임의 썸네일 포커스,"약 1.5초 후, 썸네일 우측 하단에 로딩 인디케이터 노출",,PASS,O,,,test_10_list_preview.py :: test_임의_썸네일_포커스
+,,,,,,,,"로딩 후, 20초간 LIVE 시점 리스트 미리보기 재생",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 미리보기 재생 확인,영상 길이 역카운트,,PASS,O,,,test_10_list_preview.py :: test_리스트_미리보기_재생_확인
+,,,,,,,,"오디오, 비디오 싱크 체크",,PASS,X,,,test_10_list_preview.py
+,,,,,,,,"20초간 재생 후, 재생 종료되며 기존 썸네일로 복귀",,PASS,O,,,test_10_list_preview.py
+,,,MY,즐겨찾기한 스트리머의 LIVE,섹션,-,임의 썸네일 포커스,"약 1.5초 후, 썸네일 우측 하단에 로딩 인디케이터 노출",,PASS,O,,,test_10_list_preview.py :: test_임의_썸네일_포커스
+,,,,,,,,"로딩 후, 20초간 LIVE 시점 리스트 미리보기 재생",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 미리보기 재생 확인,"오디오, 비디오 싱크 체크",,PASS,X,,,test_10_list_preview.py :: test_리스트_미리보기_재생_확인
+,,,,,,,,"20초간 재생 후, 재생 종료되며 기존 썸네일로 복귀",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 재생 중 다른 썸네일 포커스,리스트 재생 종료되며 다른 썸네일로 포커스 이동,,PASS,O,,,test_10_list_preview.py :: test_리스트_재생_중_다른_썸네일_포커스
+,,,,,,,리스트 재생 중 썸네일 클릭,리스트 재생 종료되며 방송 참여,,PASS,O,,,test_10_list_preview.py :: test_리스트_재생_중_썸네일_클릭
+,,,,,더보기,-,임의 썸네일 포커스,"약 1.5초 후, 썸네일 우측 하단에 로딩 인디케이터 노출",,PASS,O,,,test_10_list_preview.py :: test_임의_썸네일_포커스
+,,,,,,,,"로딩 후, 20초간 LIVE 시점 리스트 미리보기 재생",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 미리보기 재생 확인,"오디오, 비디오 싱크 체크",,PASS,X,,,test_10_list_preview.py :: test_리스트_미리보기_재생_확인
+,,,,,,,,"20초간 재생 후, 재생 종료되며 기존 썸네일로 복귀",,PASS,O,,,test_10_list_preview.py
+,,,,,,,리스트 재생 중 다른 썸네일 포커스,리스트 재생 종료되며 다른 썸네일로 포커스 이동,,PASS,O,,,test_10_list_preview.py :: test_리스트_재생_중_다른_썸네일_포커스
+,,,,,,,리스트 재생 중 썸네일 클릭,리스트 재생 종료되며 방송 참여,,PASS,O,,,test_10_list_preview.py :: test_리스트_재생_중_썸네일_클릭
+,,리스트예외 케이스,임의 메뉴,임의 리스트,-,비밀번호 설정테스트 방송 셋팅,비밀번호 방송 썸네일 클릭,비밀번호 설정 방송 안내 메시지 노출,,PASS,O,,,test_12_exceptions.py :: test_비밀번호_방송_썸네일_클릭
+,,,,,,,,비밀번호 입력 필드 포커스,,PASS,O,,,test_12_exceptions.py
+,,,,,,,,키패드 노출,,PASS,O,,,test_12_exceptions.py
+,,,,,,,올바르지 않은 비밀번호 입력 후 엔터,비밀번호를 다시 확인해주세요 안내메시지 노출,,PASS,O,,,test_12_exceptions.py :: test_올바르지_않은_비밀번호_입력_후_엔터
+,,,,,,,올바른 비밀번호 입력 후 엔터,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_12_exceptions.py :: test_올바른_비밀번호_입력_후_엔터
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_12_exceptions.py :: test_리모컨_BACK_키_클릭
+,,,임의 메뉴,임의 리스트,-,성인 미인증 계정로그인,연령제한 방송 썸네일 클릭,연령제한 안내 얼럿 노출,,PASS,O,검색 외엔 성인인증된 계정으로 로그인해야 연령제한 컨텐츠 노출됨,,test_12_exceptions.py :: test_연령제한_방송_썸네일_클릭
+,,,,,,,,[리스트로 이동] 버튼 노출 및 포커스,,PASS,O,,,test_12_exceptions.py
+,,,,,,,[리스트로 이동] 버튼 클릭,"얼럿 닫히며, 이전 화면 노출",,PASS,O,,,test_12_exceptions.py :: test_리스트로_이동__버튼_클릭
+,,,임의 메뉴,임의 리스트,-,성인 인증 계정로그인,연령제한 방송 썸네일 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_12_exceptions.py :: test_연령제한_방송_썸네일_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_12_exceptions.py :: test_리모컨_BACK_키_클릭
+,,,임의 메뉴,임의 리스트,-,성인 미인증 계정로그인,부분 연령제한 VOD 썸네일 클릭,연령제한 안내 얼럿 노출,,PASS,O,,,test_12_exceptions.py :: test_부분_연령제한_VOD_썸네일_클릭
+,,,,,,,,"[리스트로 이동], [연령 제한 제외하고 재생] 버튼 노출",,PASS,O,,,test_12_exceptions.py
+,,,,,,,,[연령 제한 제외하고 재생] 버튼 포커스,,PASS,O,,,test_12_exceptions.py
+,,,,,,,[리스트로 이동] 버튼 클릭,"얼럿 닫히며, 이전 화면 노출",,PASS,O,,,test_12_exceptions.py :: test_리스트로_이동__버튼_클릭
+,,,,,,,[연령 제한 제외하고 재생] 버튼 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_12_exceptions.py :: test_연령_제한_제외하고_재생__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어 닫히며 이전 화면 노출,,PASS,O,,,test_12_exceptions.py :: test_리모컨_BACK_키_클릭
+,,LIVE 플레이어,임의 메뉴,임의 리스트,-,비로그인,LIVE 방송 썸네일 클릭,프리롤 광고 재생,,PASS,O,,,test_11_player_controls.py :: test_LIVE_방송_썸네일_클릭
+,,,LIVE 플레이어,프리롤 광고,-,-,,좌측 하단 광고 프로필 및 광고 길이 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,우측 하단 인디케이터 및 [광고 SKIP] 버튼 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,우측 하단 퀵뷰 구매 안내 문구 노출,,PASS,O,{n}초 후 광고 SKIP,,test_11_player_controls.py
+,,,,,,,15초 후 [광고 SKIP] 버튼 확인,[광고 SKIP] 버튼 자동 포커스,,PASS,O,,,test_11_player_controls.py :: test_15초_후__광고_SKIP__버튼_확인
+,,,,,,,└ 리모컨 방향키 임의 클릭,[광고 SKIP] 버튼 외 다른 포커스 이동 불가,,PASS,O,,,test_11_player_controls.py :: test_리모컨_방향키_임의_클릭
+,,,,,,,[광고 SKIP] 버튼 클릭,프리롤 광고 즉시 종료되며 LIVE 방송 참여,,PASS,O,,,test_11_player_controls.py :: test_광고_SKIP__버튼_클릭
+,,,,-,-,프리롤 광고가없는 경우,LIVE 방송 썸네일 클릭,LIVE 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_11_player_controls.py :: test_LIVE_방송_썸네일_클릭
+,,,,,,,광고 api 호출 확인,광고 api 정상 호출,,PASS,O,,,test_11_player_controls.py :: test_광고_api_호출_확인
+,,,,,,,광고 api 리스폰스 확인,status = NO_ADS,,PASS,O,,,test_11_player_controls.py :: test_광고_api_리스폰스_확인
+,,,LIVE 플레이어,-,-,-,LIVE 플레이어 진입 확인,방송 영상 및 사운드 재생 확인,,PASS,O,,,test_11_player_controls.py :: test_LIVE_플레이어_진입_확인
+,,,,,,,,우측 채팅 UI 노출,,PASS,O,,,test_11_player_controls.py
+,,,LIVE 플레이어,퀵채팅,-,비로그인,퀵채팅 클릭,로그인 화면 노출,,PASS,O,,,test_11_player_controls.py :: test_퀵채팅_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어로 복귀,,PASS,O,,,test_11_player_controls.py :: test_리모컨_BACK_키_클릭
+,,,LIVE 플레이어,컴포넌트,-,,[별풍선] 버튼 클릭,로그인 화면 노출,,PASS,O,,,test_11_player_controls.py :: test_별풍선__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어로 복귀,,PASS,O,,,test_11_player_controls.py :: test_리모컨_BACK_키_클릭
+,,,,,,,[UP] 버튼 클릭,로그인 화면 노출,,PASS,O,,,test_11_player_controls.py :: test_UP__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어로 복귀,,PASS,O,,,test_11_player_controls.py :: test_리모컨_BACK_키_클릭
+,,,,,,,[즐겨찾기] 버튼 클릭,로그인 화면 노출,,PASS,O,,,test_11_player_controls.py :: test_즐겨찾기__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,LIVE 플레이어로 복귀,,PASS,O,,,test_11_player_controls.py :: test_리모컨_BACK_키_클릭
+,,,,,,,[나중에 보기] 버튼 클릭,로그인 화면 노출,,PASS,O,,,test_11_player_controls.py :: test_나중에_보기__버튼_클릭
+,,,,,,,└ 로그인 프로세스 진행,로그인되며 LIVE 플레이어로 복귀,,PASS,O,,,test_11_player_controls.py :: test_로그인_프로세스_진행
+,,,LIVE 플레이어,시청 영역,-,이어폰 착용,방송 시청 기본 체크,영상 버퍼링 및 프레임 확인,,PASS,X,,,test_11_player_controls.py :: test_방송_시청_기본_체크
+,,,,,,,,오디오 & 비디오 싱크 확인,,PASS,X,,,test_11_player_controls.py
+,,,,채팅 영역,,,우측 채팅 노출 확인,우측 채팅 UI 노출,,PASS,O,,,test_11_player_controls.py :: test_우측_채팅_노출_확인
+,,,,,,,,디폴트 설정값 : 채팅 ON,,PASS,O,,,test_11_player_controls.py
+,,,,컴포넌트,-,,[채팅 UI] 버튼 클릭,우측 채팅 UI 미노출,,PASS,O,,,test_11_player_controls.py :: test_채팅_UI__버튼_클릭
+,,,,,,,,숏채팅 노출,,PASS,O,채팅 UI에 적재되지 않음,,test_11_player_controls.py
+,,,,,,,└ 앱 재실행 후 다시 LIVE 방송 참여,설정값 유지되어 우측 채팅 UI 미노출,,PASS,O,,,test_11_player_controls.py :: test_앱_재실행_후_다시_LIVE_방송_참여
+,,,,,,,└ 채팅 UI 다시 클릭,우측 채팅 UI 노출,,PASS,O,,,test_11_player_controls.py :: test_채팅_UI_다시_클릭
+,,,,채팅 영역,-,-,채팅 메시지 확인,등급별 유저 닉네임 색상 정상 반영 확인,,PASS,O,,,test_11_player_controls.py :: test_채팅_메시지_확인
+,,,,,,,,구독 퍼스나콘 노출 확인,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,채팅 텍스트 노출 확인,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,채팅 이모티콘 노출 확인,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,채팅 OGQ 이모티콘 노출 확인,,PASS,O,,,test_11_player_controls.py
+,,,,채팅 영역,퀵채팅,-,퀵채팅 클릭,채팅 전송 확인,,PASS,O,,,test_11_player_controls.py :: test_퀵채팅_클릭
+,,,,,,,└ ㅋㅋㅋㅋ / UP / 인정 / 하트 / 박수 / zzZ,,,PASS,O,,,test_11_player_controls.py :: test_UP___인정___하트___박
+,,,LIVE 플레이어,컴포넌트,방송 정보,-,컴포넌트 방송 정보 영역 확인,스트리머 프로필 이미지 / 닉네임 노출,,PASS,O,,,test_11_player_controls.py :: test_컴포넌트_방송_정보_영역_확인
+,,,,,,,,참여자 수 / 방송시간 노출,,PASS,O,{n}명 참여중 / {00:00:00} 방송중,,test_11_player_controls.py
+,,,,,,,,방송 제목 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,프로그래스바 노출,,PASS,O,포커스 되지 않는 UI,,test_11_player_controls.py
+,,,,,,,,LIVE 뱃지 노출,,PASS,O,,,test_11_player_controls.py
+,,,LIVE 플레이어,컴포넌트,기능 영역,별풍선 보유 상태,[별풍선] 버튼 클릭,별풍선 선물 UI 노출,,PASS,O,,,test_11_player_controls.py :: test_별풍선__버튼_클릭
+,,,,,,,,보유 별풍선 개수 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,기본 별풍선 및 시그니처 별풍선 이미지 및 개수 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,선물하기 버튼 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,맨 우측 직접 입력 버튼 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,보유한 별풍선 개수보다 높은 별풍선 포커스,선물하기 버튼 하단 별풍선 부족 안내 노출,,PASS,O,,,test_11_player_controls.py :: test_보유한_별풍선_개수보다_높은_별풍선_포커스
+,,,,,,,보유한 별풍선 개수보다 적은 별풍선 포커스,별풍선 부족 안내 미노출 처리,,PASS,O,,,test_11_player_controls.py :: test_보유한_별풍선_개수보다_적은_별풍선_포커스
+,,,,,,,[선물하기] 버튼 클릭,별풍선을 선물하였습니다. 토스트 메시지 노출,,PASS,O,,,test_11_player_controls.py :: test_선물하기__버튼_클릭
+,,,,,,,,채팅 영역 별풍선 세레모니 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,[직접 입력] 버튼 클릭,별풍선 개수 입력필드 노출 및 보유 별풍선 개수 노출,,PASS,O,,,test_11_player_controls.py :: test_직접_입력__버튼_클릭
+,,,,,,,,숫자 키패드 노출 및 숫자 1 포커스,,PASS,O,,,test_11_player_controls.py
+,,,,,,,보유한 별풍선 개수보다 높은 숫자 입력,선물하기 버튼 하단 별풍선 부족 안내 노출,,PASS,O,,,test_11_player_controls.py :: test_보유한_별풍선_개수보다_높은_숫자_입력
+,,,,,,,보유한 별풍선 개수보다 적은 숫자 입력,별풍선 부족 안내 미노출 처리,,PASS,O,,,test_11_player_controls.py :: test_보유한_별풍선_개수보다_적은_숫자_입력
+,,,,,,,[선물하기] 버튼 클릭,별풍선을 선물하였습니다. 토스트 메시지 노출,,PASS,O,,,test_11_player_controls.py :: test_선물하기__버튼_클릭
+,,,,,,,,채팅 영역 별풍선 세레모니 노출,,PASS,O,,,test_11_player_controls.py
+,,,LIVE 플레이어,컴포넌트,기능 영역,-,[UP] 버튼 클릭,[UP] 버튼 UI에 체크 표시 추가되며 색상 적용,,PASS,O,,,test_11_player_controls.py :: test_UP__버튼_클릭
+,,,,,,,[즐겨찾기] 버튼 클릭,[즐겨찾기] 버튼 UI에 체크 표시 추가되며 색상 적용,,PASS,O,,,test_11_player_controls.py :: test_즐겨찾기__버튼_클릭
+,,,,,,,└ 다시 [즐겨찾기] 버튼 클릭,"[즐겨찾기] 버튼에 체크 표시 제거되며, 기존 색상 적용",,PASS,O,,,test_11_player_controls.py :: test_다시__즐겨찾기__버튼_클릭
+,,,,,,,[나중에 보기] 버튼 클릭,[나중에 보기] 버튼 UI에 체크 표시 추가되며 색상 적용,,PASS,O,,,test_11_player_controls.py :: test_나중에_보기__버튼_클릭
+,,,,,,,└ 다시 [나중에 보기] 버튼 클릭,"[나중에 보기] 버튼에 체크 표시 제거되며, 기존 색상 적용",,PASS,O,,,test_11_player_controls.py :: test_다시__나중에_보기__버튼_클릭
+,,,LIVE 플레이어,컴포넌트,스트리머 VOD 리스트,-,기능 영역에서 리모컨 DOWN 키 클릭,{스트리머}님의 VOD 리스트 섹션 형태로 노출,,PASS,O,,,test_11_player_controls.py :: test_기능_영역에서_리모컨_DOWN_키_클릭
+,,,,,,,,썸네일 / 재생 수 / 영상 길이 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,스트리머 닉네임 / 업로드 일자 노출,,PASS,O,n일전 형태,,test_11_player_controls.py
+,,,,,,,임의 VOD 썸네일 포커스 후 클릭,LIVE 플레이어 종료되며 VOD 참여,,PASS,O,,,test_11_player_controls.py :: test_임의_VOD_썸네일_포커스_후_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,리스트로 복귀,,PASS,O,,,test_11_player_controls.py :: test_리모컨_BACK_키_클릭
+,,,LIVE 플레이어,컴포넌트,추천 방송,-,{스트리머}님의 VOD 리스트에서 DOWN 키 클릭,추천 방송 리스트 섹션 형태로 노출,,PASS,O,,,test_11_player_controls.py :: test_스트리머_님의_VOD_리스트에서_DOWN_키
+,,,,,,,,썸네일 / 참여자 수 / 타이틀 / 스트리머 닉네임 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,임의 LIVE 썸네일 포커스 후 클릭,기존 참여 중인 LIVE 플레이어 종료되며 LIVE 참여,,PASS,O,,,test_11_player_controls.py :: test_임의_LIVE_썸네일_포커스_후_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,리스트로 복귀,,PASS,O,,,test_11_player_controls.py :: test_리모컨_BACK_키_클릭
+,,,LIVE 플레이어,채팅 영역,-,스트리머 - 채팅금지,채팅 영역 확인,채팅 금지 30초 적용,,PASS,X,,,test_11_player_controls.py :: test_채팅_영역_확인
+,,,,,,,,퀵채팅 영역 미노출되며 {30}초 후 채팅 가능 안내 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,└ 30초 이후 채팅 전송,채팅 정상 전송,,PASS,O,,,test_11_player_controls.py :: test_30초_이후_채팅_전송
+,,,,,,스트리머 - 채팅금지(2회차),채팅 영역 확인,채팅 금지 30초 적용,,PASS,X,,,test_11_player_controls.py :: test_채팅_영역_확인
+,,,,,,,,퀵채팅 영역 미노출되며 {30}초 후 채팅 가능 안내 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,└ 30초 이후 채팅 전송,채팅 정상 전송,,PASS,O,,,test_11_player_controls.py :: test_30초_이후_채팅_전송
+,,,,,,스트리머 - 채팅금지(3회차),LIVE 플레이어 확인,블라인드 적용,,PASS,X,얼럿이 2개 뜨는듯?모바일이랑 동시 접속 일땐 블라인드 안됨,,test_11_player_controls.py :: test_LIVE_플레이어_확인
+,,,,,,,,블라인드 안내 화면 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,{02분00초} 경과 후 재입장 된다는 안내 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,[나가기] 버튼 노출 및 포커스,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,"2분 경과 후, LIVE 참여 복귀",,PASS,O,,,test_11_player_controls.py
+,,,,,,,└ [나가기] 버튼 클릭,강제 퇴장 처리,,PASS,O,,,test_11_player_controls.py :: test_나가기__버튼_클릭
+,,,,,,스트리머 - 강제퇴장,LIVE 플레이어 확인,LIVE 플레이어 종료되며 리스트로 복귀,,PASS,X,안내 얼럿이 필요할 것 같음,,test_11_player_controls.py :: test_LIVE_플레이어_확인
+,,,,,,,└ 해당 방송 다시 참여 시도,강제 퇴장되어 참여할 수 없다는 안내 얼럿 노출,,PASS,O,,,test_11_player_controls.py :: test_해당_방송_다시_참여_시도
+,,,,,,스트리머 - 블랙리스트,LIVE 플레이어 확인,LIVE 플레이어 종료되며 리스트로 복귀,,PASS,X,강퇴가 안되는데,,test_11_player_controls.py :: test_LIVE_플레이어_확인
+,,,,,,,└ 해당 방송 다시 참여 시도,블랙 리스트에 등록되어 참여할 수 없다는 안내 얼럿 노출,,PASS,O,안내 얼럿이 필요할 것 같음,,test_11_player_controls.py :: test_해당_방송_다시_참여_시도
+,,,,,,스트리머 - 매니저 임명,채팅 영역 확인,매니저 임명 시스템 메시지 확인,,PASS,X,,,test_11_player_controls.py :: test_채팅_영역_확인
+,,,,,,,임의 퀵채팅 전송,매니저 뱃지 적용 확인,,PASS,O,,,test_11_player_controls.py :: test_임의_퀵채팅_전송
+,,,,,,스트리머 - 매니저 해임,채팅 영역 확인,매니저 해임 시스템 메시지 확인,,PASS,X,,,test_11_player_controls.py :: test_채팅_영역_확인
+,,,,,,,임의 퀵채팅 전송,매니저 뱃지 미적용 확인,,PASS,O,,,test_11_player_controls.py :: test_임의_퀵채팅_전송
+,,,LIVE 플레이어,채팅 영역,-,스트리머 -채팅창 얼리기 설정,채팅 메시지 확인,채팅창을 얼렸습니다. 시스템 메시지 노출,,PASS,X,,,test_11_player_controls.py :: test_채팅_메시지_확인
+,,,,,,,,설정별 스트리머/매니저/열혈팬 등 채팅 가능 권한 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,채팅창 얼려진 상태에서 퀵채팅 전송,토스트 메시지 노출되며 채팅 전송 불가,,PASS,O,,,test_11_player_controls.py :: test_채팅창_얼려진_상태에서_퀵채팅_전송
+,,,,,,스트리머 -저속모드 설정,채팅 메시지 확인,저속모드 활성화 시스템 메시지 노출,,PASS,X,,,test_11_player_controls.py :: test_채팅_메시지_확인
+,,,,,,,,설정별 n초 간격으로 채팅 입력 가능 안내 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,채팅 UI 상단 저속모드 UI 노출,,PASS,X,,,test_11_player_controls.py
+,,,,,,,채팅가능 상태에서 채팅 전송,"채팅이 전송되며, 저속모드 UI 갱신",,PASS,X,,,test_11_player_controls.py :: test_채팅가능_상태에서_채팅_전송
+,,,,,,,,채팅 가능 카운트 진행,,PASS,O,,,test_11_player_controls.py
+,,,,,,,채팅불가 상태에서 채팅 전송,토스트 메시지 노출되며 채팅 전송 불가,,PASS,O,,,test_11_player_controls.py :: test_채팅불가_상태에서_채팅_전송
+,,,,,,스트리머 -저속모드 해제,채팅 메시지 확인,저속모드 비활성화 시스템 메시지 노출,,PASS,X,,,test_11_player_controls.py :: test_채팅_메시지_확인
+,,,,,,,,채팅 UI 상단 저속모드 UI 미노출 처리,,PASS,X,,,test_11_player_controls.py
+,,,,,,,채팅 전송,채팅 정상 전송,,PASS,O,,,test_11_player_controls.py :: test_채팅_전송
+,,,,예외사항,,유료광고포함표시,유료광고포함표시 설정된 방송 진입,우상단에 유료광고표시 라벨 노출됨,,N/A,X,스마트tv 내용,,test_11_player_controls.py :: test_유료광고포함표시_설정된_방송_진입
+,,,,,,,유료광고포함표시 해제된 방송 진입,우상단에 유료광고표시 라벨 노출되지 않음,,N/A,X,스마트tv 내용,,test_11_player_controls.py :: test_유료광고포함표시_해제된_방송_진입
+,,LIVE 플레이어예외 케이스,무중단case,LIVE 플레이어,-,스트리머 - 무중단,LIVE 플레이어 확인,무중단 안내 문구 및 대기 시간 노출,,PASS,X,,,test_11_player_controls.py :: test_LIVE_플레이어_확인
+,,,,,-,스트리머 - 방송재개,LIVE 플레이어 확인,LIVE 참여 복귀,,PASS,X,,,test_11_player_controls.py :: test_LIVE_플레이어_확인
+,,,,,,,방송 시청 기본 체크,영상 버퍼링 및 프레임 확인,,PASS,X,,,test_11_player_controls.py :: test_방송_시청_기본_체크
+,,,,,,,,오디오 & 비디오 싱크 확인,,PASS,X,,,test_11_player_controls.py
+,,,방송종료case,LIVE 플레이어,-,스트리머 방송 종료,LIVE 플레이어 확인,스트리머 프로필 이미지 및 닉네임이 포함된 안내 문구 노출 ,,PASS,O,,,test_11_player_controls.py :: test_LIVE_플레이어_확인
+,,,,,,,,[리스트로 이동] 버튼 노출 및 포커스,,PASS,O,,,test_11_player_controls.py
+,,,,,,,[리스트로 이동] 버튼 클릭,리스트로 복귀,,PASS,O,,,test_11_player_controls.py :: test_리스트로_이동__버튼_클릭
+,,,퀵뷰 뺏김case,LIVE 플레이어,-,타 TV앱에서동일한 퀵뷰 계정으로LIVE 진입,LIVE 플레이어 확인,다른 TV에서 퀵뷰 사용하여 일반 모드 전환 안내 얼럿 노출,,PASS,X,TV끼리 밀어내기 되는지 보면됨,,test_11_player_controls.py :: test_LIVE_플레이어_확인
+,,,,,,,,[확인] 버튼 포커스,,PASS,O,,,test_11_player_controls.py
+,,,,,,,[확인] 버튼 클릭,안내 얼럿 닫히며 LIVE 플레이어 복귀,,PASS,O,,,test_11_player_controls.py :: test_확인__버튼_클릭
+,,,퀵뷰 뺏음case,임의 메뉴,임의 리스트,타 TV앱에서동일한 퀵뷰 계정으로LIVE 진입한 상태,임의 LIVE 썸네일 포커스 후 클릭,퀵뷰 밀어내기 안내 얼럿 노출,,PASS,X,,,test_11_player_controls.py :: test_임의_LIVE_썸네일_포커스_후_클릭
+,,,,,,,,"[취소], [참여] 버튼 노출",,PASS,O,,,test_11_player_controls.py
+,,,,,,,,[참여] 버튼 포커스 상태,,PASS,O,,,test_11_player_controls.py
+,,,,,,,[취소] 버튼 클릭,LIVE 플레이어 진입,,PASS,O,,,test_11_player_controls.py :: test_취소__버튼_클릭
+,,,,,,,,광고 api 호출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,[참여] 버튼 클릭,LIVE 플레이어 진입,,PASS,O,,,test_11_player_controls.py :: test_참여__버튼_클릭
+,,,,,,,,광고 api 미호출,,PASS,O,,,test_11_player_controls.py
+,,,os 홈 이동case,LIVE 플레이어,-,-,"방송 시청 중, 리모컨 [홈] 버튼 클릭",OS 홈으로 이동,,PASS,X,,,test_11_player_controls.py :: test_방송_시청_중__리모컨__홈__버튼_클릭
+,,,,,,,[SOOP] 앱 실행,LIVE 플레이어로 복귀,,PASS,O,,,test_11_player_controls.py :: test_SOOP__앱_실행
+,,,,,,,LIVE 플레이어 확인,방송 정상 재생 확인,,PASS,O,,,test_11_player_controls.py :: test_LIVE_플레이어_확인
+,,,전원 offcase,LIVE 플레이어,-,-,"방송 시청 중, 리모컨 [전원] 버튼 클릭",TV 전원 종료,,PASS,X,,,test_11_player_controls.py :: test_방송_시청_중__리모컨__전원__버튼_클릭
+,,,,,,,리모컨 [전원] 버튼 다시 클릭,방송 정상 재생 확인,,PASS,X,,,test_11_player_controls.py :: test_리모컨__전원__버튼_다시_클릭
+,,,,,,,LIVE 플레이어 확인,스트리머 프로필 이미지 및 닉네임이 포함된 안내 문구 노출 ,,PASS,O,,,test_11_player_controls.py :: test_LIVE_플레이어_확인
+,,,시청불가 case,LIVE 플레이어,,구독 플러스 방송 진입,LIVE 플레이어 확인,시청불가 문구 노출확인,,PASS,O,,,test_11_player_controls.py :: test_LIVE_플레이어_확인
+,,,,,,PPV 방송 진입,LIVE 플레이어 확인,시청불가 문구 노출확인,,PASS,O,,,test_11_player_controls.py :: test_LIVE_플레이어_확인
+,,,해외 시청case,LIVE 리스트,-,비로그인 +해외 VPN 설정,리스트에서 임의 LIVE 썸네일 포커스,리스트 재생 미동작 확인,,PASS,X,,,test_11_player_controls.py :: test_리스트에서_임의_LIVE_썸네일_포커스
+,,,,,,,LIVE 플레이어 진입,프리롤 광고 재생,,PASS,O,광고없음,,test_11_player_controls.py :: test_LIVE_플레이어_진입
+,,,,,,,광고 스킵 또는 종료,방송 정상 재생 확인,,PASS,O,,,test_11_player_controls.py :: test_광고_스킵_또는_종료
+,,,,,,퀵플 로그인 +해외 VPN 설정,리스트에서 임의 LIVE 썸네일 포커스,리스트 재생 동작 확인,,PASS,X,,,test_11_player_controls.py :: test_리스트에서_임의_LIVE_썸네일_포커스
+,,,,,,,LIVE 플레이어 진입,방송 정상 재생 확인,,PASS,O,,,test_11_player_controls.py :: test_LIVE_플레이어_진입
+,,,,VOD 리스트,-,비로그인 +해외 VPN 설정,리스트에서 임의 VOD 썸네일 포커스,리스트 재생 미동작 확인,,PASS,X,,,test_11_player_controls.py :: test_리스트에서_임의_VOD_썸네일_포커스
+,,,,,,,VOD 플레이어 진입,프리롤 광고 재생,,PASS,O,광고없음,,test_11_player_controls.py :: test_VOD_플레이어_진입
+,,,,,,,광고 스킵 또는 종료,영상 정상 재생 확인,,PASS,O,,,test_11_player_controls.py :: test_광고_스킵_또는_종료
+,,,,,,퀵플 로그인 +해외 VPN 설정,리스트에서 임의 VOD 썸네일 포커스,리스트 재생 동작 확인,,PASS,X,,,test_11_player_controls.py :: test_리스트에서_임의_VOD_썸네일_포커스
+,,,,,,,VOD 플레이어 진입,영상 정상 재생 확인,,PASS,O,,,test_11_player_controls.py :: test_VOD_플레이어_진입
+,,VOD 플레이어,임의 메뉴,임의 리스트,-,비로그인,다시보기 VOD 썸네일 클릭,프리롤 광고 재생,,PASS,O,크래시,,test_11_player_controls.py :: test_다시보기_VOD_썸네일_클릭
+,,,VOD 플레이어,프리롤 광고,-,-,,좌측 하단 광고 프로필 및 광고 길이 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,우측 하단 인디케이터 및 [광고 SKIP] 버튼 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,우측 하단 퀵뷰 구매 안내 문구 노출,,PASS,O,{n}초 후 광고 SKIP,,test_11_player_controls.py
+,,,,,,,,우측 채팅 UI 미노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,15초 후 [광고 SKIP] 버튼 확인,[광고 SKIP] 버튼 자동 포커스,,PASS,O,,,test_11_player_controls.py :: test_15초_후__광고_SKIP__버튼_확인
+,,,,,,,└ 리모컨 방향키 임의 클릭,[광고 SKIP] 버튼 외 다른 포커스 이동 불가,,PASS,O,,,test_11_player_controls.py :: test_리모컨_방향키_임의_클릭
+,,,,,,,[광고 SKIP] 버튼 클릭,프리롤 광고 즉시 종료되며 VOD 재생,,PASS,O,,,test_11_player_controls.py :: test_광고_SKIP__버튼_클릭
+,,,,-,-,프리롤 광고가없는 경우,다시보기 VOD 썸네일 클릭,VOD 플레이어 진입 및 로딩 후 정상 재생 확인,,PASS,O,,,test_11_player_controls.py :: test_다시보기_VOD_썸네일_클릭
+,,,,,,,광고 api 호출 확인,광고 api 정상 호출,,PASS,O,deapi.soolive.com,,test_11_player_controls.py :: test_광고_api_호출_확인
+,,,VOD 플레이어,-,-,-,VOD 플레이어 진입 확인,영상 및 사운드 재생 확인,,PASS,O,,,test_11_player_controls.py :: test_VOD_플레이어_진입_확인
+,,,,,,,,우측 채팅 UI 노출 (디폴트 on),,PASS,O,,,test_11_player_controls.py
+,,,VOD 플레이어,컴포넌트,-,비로그인,[별풍선] 버튼 클릭,로그인 화면 노출,,PASS,O,,,test_11_player_controls.py :: test_별풍선__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어로 복귀,,PASS,O,,,test_11_player_controls.py :: test_리모컨_BACK_키_클릭
+,,,,,,,[UP] 버튼 클릭,로그인 화면 노출,,PASS,O,,,test_11_player_controls.py :: test_UP__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어로 복귀,,PASS,O,,,test_11_player_controls.py :: test_리모컨_BACK_키_클릭
+,,,,,,,[즐겨찾기] 버튼 클릭,로그인 화면 노출,,PASS,O,,,test_11_player_controls.py :: test_즐겨찾기__버튼_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,VOD 플레이어로 복귀,,PASS,O,,,test_11_player_controls.py :: test_리모컨_BACK_키_클릭
+,,,,,,,[나중에 보기] 버튼 클릭,로그인 화면 노출,,PASS,O,,,test_11_player_controls.py :: test_나중에_보기__버튼_클릭
+,,,,,,,└ 로그인 프로세스 진행,로그인되며 VOD 플레이어로 복귀,,PASS,O,,,test_11_player_controls.py :: test_로그인_프로세스_진행
+,,,VOD 플레이어,시청 영역,-,이어폰 착용,VOD 재생 기본 체크,영상 버퍼링 및 프레임 확인,,PASS,X,,,test_11_player_controls.py :: test_VOD_재생_기본_체크
+,,,,,,,,오디오 & 비디오 싱크 확인,,PASS,X,,,test_11_player_controls.py
+,,,,채팅 영역,,,우측 채팅 노출 확인,우측 채팅 UI 노출,,PASS,O,,,test_11_player_controls.py :: test_우측_채팅_노출_확인
+,,,,,,,,디폴트 설정값 : 채팅 ON,,PASS,O,,,test_11_player_controls.py
+,,,,컴포넌트,-,,[채팅 UI] 버튼 클릭,우측 채팅 UI 미노출,,PASS,O,,,test_11_player_controls.py :: test_채팅_UI__버튼_클릭
+,,,,,,,,숏채팅 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,└ 앱 재실행 후 다시 VOD 재생,설정값 유지되어 우측 채팅 UI 미노출,,PASS,O,,,test_11_player_controls.py :: test_앱_재실행_후_다시_VOD_재생
+,,,,,,,└ 채팅 UI 다시 클릭,우측 채팅 UI 노출,,PASS,O,,,test_11_player_controls.py :: test_채팅_UI_다시_클릭
+,,,,채팅 영역,-,-,채팅 메시지 확인,등급별 유저 닉네임 색상 정상 반영 확인,,PASS,O,,,test_11_player_controls.py :: test_채팅_메시지_확인
+,,,,,,,,구독 퍼스나콘 노출 확인,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,채팅 텍스트 노출 확인,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,채팅 이모티콘 노출 확인,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,채팅 OGQ 이모티콘 노출 확인,,PASS,O,,,test_11_player_controls.py
+,,,VOD 플레이어,컴포넌트,방송 정보,-,컴포넌트 VOD 정보 영역 확인,스트리머 프로필 이미지 / 닉네임 노출,,PASS,O,,,test_11_player_controls.py :: test_컴포넌트_VOD_정보_영역_확인
+,,,,,,,,조회수 / 업로드 일자 노출,,PASS,O,조회수 n / n일 전,,test_11_player_controls.py
+,,,,,,,,영상 제목 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,프로그래스바 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,현재 재생 구간 / 전체 재생 길이 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,영상 제어 기능,프로그래스바에 포커싱,VOD 재생중인 상태,리모컨 엔터 버튼 선택 시 VOD 일시정지 전환됨,,PASS,O,,,test_11_player_controls.py :: test_VOD_재생중인_상태
+,,,,,,,VOD 일시정지 되어있는 상태,리모컨 엔터 버튼 선택 시 VOD 재생 전환됨,,PASS,O,,,test_11_player_controls.py :: test_VOD_일시정지_되어있는_상태
+,,,,,,,리모컨 좌측 버튼 클릭,재생시간 5초 증가함,,PASS,O,,,test_11_player_controls.py :: test_리모컨_좌측_버튼_클릭
+,,,,,,,리모컨 우측 버튼 클릭,재생시간 5초 감소함,,PASS,O,,,test_11_player_controls.py :: test_리모컨_우측_버튼_클릭
+,,,,,,,리모컨 좌측 버튼 롱 클릭,프로그래스바 우측으로 이동하며 길게 누를수록 재생시간 빠르게 증가,,PASS,O,,,test_11_player_controls.py :: test_리모컨_좌측_버튼_롱_클릭
+,,,,,,,리모컨 우측 버튼 롱 클릭,프로그래스바 좌측으로 이동하며 길게 누를수록 재생시간 빠르게 감소,,PASS,O,,,test_11_player_controls.py :: test_리모컨_우측_버튼_롱_클릭
+,,,VOD 플레이어,컴포넌트,기능 영역,별풍선 보유 상태,[별풍선] 버튼 클릭,별풍선 선물 UI 노출,,PASS,O,,,test_11_player_controls.py :: test_별풍선__버튼_클릭
+,,,,,,,,보유 별풍선 개수 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,기본 별풍선 및 시그니처 별풍선 이미지 및 개수 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,선물하기 버튼 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,맨 우측 직접 입력 버튼 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,보유한 별풍선 개수보다 높은 별풍선 포커스,선물하기 버튼 하단 별풍선 부족 안내 노출,,PASS,O,,,test_11_player_controls.py :: test_보유한_별풍선_개수보다_높은_별풍선_포커스
+,,,,,,,보유한 별풍선 개수보다 적은 별풍선 포커스,별풍선 부족 안내 미노출 처리,,PASS,O,,,test_11_player_controls.py :: test_보유한_별풍선_개수보다_적은_별풍선_포커스
+,,,,,,,[직접 입력] 버튼 클릭,별풍선 개수 입력필드 노출 및 보유 별풍선 개수 노출,,PASS,O,,,test_11_player_controls.py :: test_직접_입력__버튼_클릭
+,,,,,,,,숫자 키패드 노출 및 숫자 1 포커스,,PASS,O,,,test_11_player_controls.py
+,,,,,,,보유한 별풍선 개수보다 높은 숫자 입력,선물하기 버튼 하단 별풍선 부족 안내 노출,,PASS,O,,,test_11_player_controls.py :: test_보유한_별풍선_개수보다_높은_숫자_입력
+,,,,,,,보유한 별풍선 개수보다 적은 숫자 입력,별풍선 부족 안내 미노출 처리,,PASS,O,,,test_11_player_controls.py :: test_보유한_별풍선_개수보다_적은_숫자_입력
+,,,,,,,선물하기 버튼 하단 확인,"LIVE 입장 시, VOD 별풍선 표시 체크박스 노출 (디폴트 : 체크)",,PASS,O,,,test_11_player_controls.py :: test_선물하기_버튼_하단_확인
+,,,,,,,[선물하기] 버튼 클릭,별풍선을 선물하였습니다. 토스트 메시지 노출,,PASS,O,,,test_11_player_controls.py :: test_선물하기__버튼_클릭
+,,,,,,,└ 해당 스트리머의 Live 방송 참여,VOD 별풍선 세레모니 노출 확인,,PASS,O,,,test_11_player_controls.py :: test_해당_스트리머의_Live_방송_참여
+,,,VOD 플레이어,컴포넌트,기능 영역,-,[UP] 버튼 클릭,[UP] 버튼 UI에 체크 표시 추가되며 색상 적용,,PASS,O,,,test_11_player_controls.py :: test_UP__버튼_클릭
+,,,,,,,[즐겨찾기] 버튼 클릭,[즐겨찾기] 버튼 UI에 체크 표시 추가되며 색상 적용,,PASS,O,,,test_11_player_controls.py :: test_즐겨찾기__버튼_클릭
+,,,,,,,└ 다시 [즐겨찾기] 버튼 클릭,"[즐겨찾기] 버튼에 체크 표시 제거되며, 기존 색상 적용",,PASS,O,,,test_11_player_controls.py :: test_다시__즐겨찾기__버튼_클릭
+,,,,,,,[나중에 보기] 버튼 클릭,[나중에 보기] 버튼 UI에 체크 표시 추가되며 색상 적용,,PASS,O,,,test_11_player_controls.py :: test_나중에_보기__버튼_클릭
+,,,,,,,└ 다시 [나중에 보기] 버튼 클릭,"[나중에 보기] 버튼에 체크 표시 제거되며, 기존 색상 적용",,PASS,O,,,test_11_player_controls.py :: test_다시__나중에_보기__버튼_클릭
+,,,VOD 플레이어,컴포넌트,스트리머 VOD 리스트,-,기능 영역에서 리모컨 DOWN 키 클릭,{스트리머}님의 VOD 리스트 섹션 형태로 노출,,PASS,O,,,test_11_player_controls.py :: test_기능_영역에서_리모컨_DOWN_키_클릭
+,,,,,,,,썸네일 / 재생 수 / 영상 길이 노출,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,스트리머 닉네임 / 업로드 일자 노출,,PASS,O,n일전 형태,,test_11_player_controls.py
+,,,,,,,임의 VOD 썸네일 포커스 후 클릭,VOD 플레이어 종료되며 VOD 참여,,PASS,O,,,test_11_player_controls.py :: test_임의_VOD_썸네일_포커스_후_클릭
+,,,,,,,└ 리모컨 BACK 키 클릭,리스트로 복귀,,PASS,O,,,test_11_player_controls.py :: test_리모컨_BACK_키_클릭
+,,,,,VOD 자동재생,,VOD 재생종료,관련 VOD 리스트 노출되며 5초 뒤 재생됨,,PASS,O,,,test_11_player_controls.py :: test_VOD_재생종료
+,,,,,,,,자동재생 타이머 아이콘 노출됨,,PASS,O,,,test_11_player_controls.py
+,,,,,,,,자동재생되는 영상 썸네일 좌상단 노출됨,,PASS,O,,,test_11_player_controls.py
+,,VOD 플레이어예외 케이스,os 홈 이동case,VOD 플레이어,-,-,"VOD 시청 중, 리모컨 [홈] 버튼 클릭",OS 홈으로 이동,,PASS,X,,,test_11_player_controls.py :: test_VOD_시청_중__리모컨__홈__버튼_클릭
+,,,,,,,[SOOP] 앱 실행,VOD 플레이어로 복귀,,PASS,O,,,test_11_player_controls.py :: test_SOOP__앱_실행
+,,,,,,,VOD 플레이어 확인,VOD 정상 재생 확인,,PASS,O,,,test_11_player_controls.py :: test_VOD_플레이어_확인
+,,,전원 offcase,,,,"VOD 시청 중, 리모컨 [전원] 버튼 클릭",TV 전원 종료,,PASS,X,,,test_11_player_controls.py :: test_VOD_시청_중__리모컨__전원__버튼_클릭
+,,,,,,,리모컨 [전원] 버튼 다시 클릭,방송 정상 재생 확인,,PASS,X,,,test_11_player_controls.py :: test_리모컨__전원__버튼_다시_클릭
+,,,,,,,VOD 플레이어 확인,스트리머 프로필 이미지 및 닉네임이 포함된 안내 문구 노출 ,,PASS,O,,,test_11_player_controls.py :: test_VOD_플레이어_확인
+,,,재생불가 case,,,구독 플러스 VOD 진입,VOD 플레이어 확인,시청불가 문구 노출확인,,PASS,O,,,test_11_player_controls.py :: test_VOD_플레이어_확인
