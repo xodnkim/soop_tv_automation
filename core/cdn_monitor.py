@@ -68,11 +68,11 @@ class StreamNetworkMonitor:
                     "expected": "application/vnd.apple.mpegurl",
                     "got": content_type
                 })
-            elif ".ts" in url_lower and "mp2t" not in content_type and "octet-stream" not in content_type and "video" not in content_type:
+            elif (".ts" in url_lower or ".m4s" in url_lower) and not any(k in content_type for k in ["mp2t", "mp4", "video", "octet-stream"]):
                 self.anomalies.append({
                     "type": "CONTENT_TYPE_MISMATCH",
                     "url": url,
-                    "expected": "video/MP2T",
+                    "expected": "video/MP2T or video/mp4",
                     "got": content_type
                 })
 
