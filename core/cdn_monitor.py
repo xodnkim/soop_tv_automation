@@ -105,6 +105,11 @@ class StreamNetworkMonitor:
         min_ts_interval = min(ts_intervals) if ts_intervals else 0.0
         avg_ts_interval = round(sum(ts_intervals) / len(ts_intervals), 2) if ts_intervals else 0.0
 
+        # .m3u8 플레이리스트 폴링 간격 분석
+        m3u8_timestamps = [r["timestamp"] for r in m3u8_records]
+        m3u8_intervals = [round(m3u8_timestamps[i] - m3u8_timestamps[i-1], 2) for i in range(1, len(m3u8_timestamps))]
+        avg_m3u8_interval = round(sum(m3u8_intervals) / len(m3u8_intervals), 2) if m3u8_intervals else 0.0
+
         # 버퍼링 이상 감지 (패킷 간격이 8초 이상 지연되면 버퍼링으로 간주)
         if max_ts_interval > 8.0:
             self.anomalies.append({
@@ -125,6 +130,7 @@ class StreamNetworkMonitor:
             "avg_ts_interval": avg_ts_interval,
             "min_ts_interval": min_ts_interval,
             "max_ts_interval": max_ts_interval,
+            "avg_m3u8_interval": avg_m3u8_interval,
             "http_error_count": len(http_errors),
             "type_mismatch_count": len(type_mismatches),
             "buffering_error_count": len(buffering_errors),

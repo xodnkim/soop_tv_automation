@@ -52,7 +52,7 @@ class TestCDNPerformance(BaseCDNTest):
         print(f" - 총 모니터링 경과 시간: {stats['total_monitoring_time']} 초")
         print(f" - 수신된 총 미디어 요청 수: {stats['total_media_requests']} 건")
         print(f" - 비디오 세그먼트(.ts) 수신 수: {stats['ts_total']} 건")
-        print(f" - HLS 플레이리스트(.m3u8) 수신 수: {stats['m3u8_total']} 건")
+        print(f" - HLS 플레이리스트(.m3u8) 수신 수: {stats['m3u8_total']} 건 (갱신 주기: 약 {stats['avg_m3u8_interval']}초)")
         print(f" - .ts 수신 간격 (평균/최소/최대): {stats['avg_ts_interval']}s / {stats['min_ts_interval']}s / {stats['max_ts_interval']}s")
         print(f" - HTTP 4xx/5xx 에러 건수: {stats['http_error_count']} 건")
         print(f" - Content-Type 미스매치 건수: {stats['type_mismatch_count']} 건")
