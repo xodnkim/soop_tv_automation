@@ -19,6 +19,10 @@ class SoopDriver:
         self.cdp = CDPClient(ws_url)
         self.cdp.send("Page.enable")
         self.cdp.send("Runtime.enable")
+        try:
+            self.cdp.send("Network.enable")
+        except Exception as e:
+            print(f"[CDP WARN] Network.enable failed: {e}")
 
     def close(self):
         self.cdp.close()

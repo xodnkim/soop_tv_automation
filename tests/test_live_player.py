@@ -493,3 +493,4 @@ class TestLivePlayerRelatedContent(BaseLivePlayerTest):
     def test_back_from_live_returns_to_list(self, driver):
         """# TC: liveplayer_069 - BACK → 리스트 복귀"""
         pass
+
