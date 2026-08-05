@@ -91,10 +91,19 @@ class StreamNetworkMonitor:
         ts_records = [r for r in self.records if ".ts" in r["url"].lower() or ".m4s" in r["url"].lower()]
         m3u8_records = [r for r in self.records if ".m3u8" in r["url"].lower()]
 
-        # .ts 세그먼트 패킷 간도착 시간(interval) 간격 계산
+        # 총 모니터링 경과 시간 계산
+        if self.records:
+            total_monitoring_time = round(self.records[-1]["timestamp"] - self.records[0]["timestamp"], 2)
+        else:
+            total_monitoring_time = 0.0
+
+        # .ts 세그먼트 패킷 간도착 시간(interval) 간격 분석
         ts_timestamps = [r["timestamp"] for r in ts_records]
         ts_intervals = [round(ts_timestamps[i] - ts_timestamps[i-1], 2) for i in range(1, len(ts_timestamps))]
+        
         max_ts_interval = max(ts_intervals) if ts_intervals else 0.0
+        min_ts_interval = min(ts_intervals) if ts_intervals else 0.0
+        avg_ts_interval = round(sum(ts_intervals) / len(ts_intervals), 2) if ts_intervals else 0.0
 
         # 버퍼링 이상 감지 (패킷 간격이 8초 이상 지연되면 버퍼링으로 간주)
         if max_ts_interval > 8.0:
@@ -110,8 +119,11 @@ class StreamNetworkMonitor:
 
         return {
             "total_media_requests": total,
+            "total_monitoring_time": total_monitoring_time,
             "ts_total": len(ts_records),
             "m3u8_total": len(m3u8_records),
+            "avg_ts_interval": avg_ts_interval,
+            "min_ts_interval": min_ts_interval,
             "max_ts_interval": max_ts_interval,
             "http_error_count": len(http_errors),
             "type_mismatch_count": len(type_mismatches),
