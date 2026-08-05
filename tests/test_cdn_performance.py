@@ -1,7 +1,7 @@
 """
 test_cdn_performance.py
 - SOOP TV 스마트 TV 앱 CDN 성능 및 네트워크 품질 검증 테스트
-- 비디오 스트림 CDN 캐시 히트율(Cache Hit Ratio), HLS 세그먼트 수신 상태, 도메인 모니터링
+- 비디오 스트림 CDN 캐시 히트율(Cache Hit Ratio), HLS 세그먼트(.ts) 수신 상태, CDN 도메인 모니터링
 """
 import time
 import pytest
@@ -12,8 +12,11 @@ from pages.live_player_page import LivePlayerPage
 
 class BaseCDNTest:
     @pytest.fixture(autouse=True)
-    def enter_live_player_for_cdn_test(self, driver):
-        """홈 → 지정 방송 진입 후 플레이어 로드 대기"""
+    def enter_live_player_and_monitor(self, driver):
+        """홈 → 지정 방송 진입 전 모니터링을 미리 켜서 초기 비디오 세그먼트부터 수집"""
+        self.monitor = CDNCacheMonitor(driver)
+        self.monitor.start()
+
         home = HomePage(driver)
         home.is_loaded(timeout=10)
         time.sleep(3)
@@ -25,41 +28,44 @@ class BaseCDNTest:
         player = LivePlayerPage(driver)
         assert player.is_loaded(timeout=30), "LIVE 플레이어 진입 실패"
 
+        yield
+
+        self.monitor.stop()
+
 
 class TestCDNPerformance(BaseCDNTest):
     def test_live_stream_cdn_cache_hit_ratio(self, driver):
         """
-        [CDN 성능] LIVE 방송 시청 중 CDN 비디오 세그먼트 요청 캡처 및 캐시 히트율(Cache Hit Ratio) 측정
-        - 15초 동안 재생 중 수신되는 .ts / .m4s / .m3u8 요청의 Response Header(X-Cache, Age 등) 분석
+        [CDN 성능 검증] LIVE 방송 진입 및 재생 중 비디오 세그먼트(.ts) 캡처 및 캐시 히트율/캐시 정책 분석
         """
-        monitor = CDNCacheMonitor(driver)
-        monitor.start()
+        # 추가 재생 10초간 세그먼트 패킷 지켜보기
+        time.sleep(10)
 
-        # 15초간 방송 재생하며 CDP 네트워크 트래픽 수집
-        time.sleep(15)
+        stats = self.monitor.get_stats()
 
-        monitor.stop()
-        stats = monitor.get_stats()
-
-        print("\n==========================================")
-        print("          [CDN 캐시 히트율 측정 결과]       ")
-        print("==========================================")
-        print(f" - 감지된 총 패킷 요청 수: {stats['total_requests']}")
-        print(f" - 비디오 세그먼트 수: {stats['segment_total']}")
-        print(f" - 세그먼트 캐시 HIT 수: {stats['segment_hits']}")
-        print(f" - 세그먼트 캐시 MISS 수: {stats['segment_misses']}")
-        print(f" - 세그먼트 캐시 히트율: {stats['segment_hit_ratio']}%")
+        print("\n==================================================")
+        print("          [SOOP TV CDN 성능 및 캐시 분석 리포트]  ")
+        print("==================================================")
+        print(f" - 수신된 총 미디어 요청 수: {stats['total_media_requests']} 건")
+        print(f" - 비디오 세그먼트(.ts) 요청 수: {stats['ts_total']} 건")
+        print(f" - HLS 플레이리스트(.m3u8) 요청 수: {stats['m3u8_total']} 건")
+        print(f" - 세그먼트 캐시 HIT: {stats['ts_hits']} 건 / MISS: {stats['ts_misses']} 건")
+        print(f" - 세그먼트 캐시 히트율: {stats['ts_hit_ratio']}%")
+        print(f" - Cache-Control 정책 적용률: {stats['cacheable_ratio']}%")
+        print("--------------------------------------------------")
         if stats['records']:
-            print("\n[감지된 미디어 URL 예시]")
-            for r in stats['records'][:3]:
-                print(f"  * [{r['cache_status']}] {r['url'][:90]}... (Header: {r['header']})")
-        print("==========================================")
+            print(" [수신된 대표 미디어 패킷 샘플]")
+            for i, r in enumerate(stats['records'][:5], 1):
+                print(f"  {i}. [{r['cache_status']}] {r['url'][:80]}...")
+                print(f"     -> Header: {r['info']}")
+        print("==================================================")
 
-        assert stats['total_requests'] > 0, "CDP 네트워크 모니터링 중 미디어 세그먼트 요청을 감지하지 못했습니다."
+        assert stats['total_media_requests'] > 0, "방송 재생 중 미디어 트래픽(HLS/세그먼트)을 감지하지 못했습니다."
+        assert stats['ts_total'] > 0, "비디오 세그먼트(.ts) 수신 기록이 0건입니다."
 
     def test_cdn_stream_domain_and_manifest_validity(self, driver):
         """
-        [CDN 도메인] <video> 태그의 HLS 스트림 URL이 정상 CDN 서버 도메인을 타는지 검증
+        [CDN 도메인 검증] <video> 태그의 HLS 스트림 URL이 정규 CDN 서버 도메인을 타는지 검증
         """
         stream_url = driver.cdp.evaluate(
             "(function() {"

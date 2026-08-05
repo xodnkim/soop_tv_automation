@@ -1,7 +1,7 @@
 """
 cdn_monitor.py
-- CDP Network 이벤트를 활용한 CDN 캐시 히트율(Cache Hit Ratio) 측정 모듈
-- HTTP Response Header(X-Cache, CF-Cache-Status, Age 등)를 실시간 감시 및 수집
+- CDP Network 이벤트를 활용한 CDN 세그먼트 및 캐시 히트율/캐시 설정 측정 모듈
+- SOOP TV 실제 미디어 트래픽(.ts, .m3u8, mp4hls) 파이프라인 분석
 """
 import time
 
@@ -37,24 +37,22 @@ class CDNCacheMonitor:
 
         response = params.get("response", {})
         url = response.get("url", "")
-
-        # 비디오 세그먼트, HLS 플레이리스트, 미디어 관련 파일 필터링
         url_lower = url.lower()
-        is_media_url = any(ext in url_lower for ext in [".ts", ".m3u8", ".m4s", "playlist", "segment", "chunk", "live", "auth_playlist"])
-        
-        if is_media_url:
+
+        # SOOP TV 비디오 세그먼트(.ts), HLS 플레이리스트(.m3u8), MP4HLS 등 미디어 트래픽 필터링
+        is_media = any(k in url_lower for k in [".ts", ".m3u8", ".m4s", "mp4hls", "chunklist"])
+        if is_media:
             headers = response.get("headers", {})
-            # Header 키를 소문자로 정규화
             headers_lower = {str(k).lower(): str(v) for k, v in headers.items()}
 
             cache_status = "UNKNOWN"
-            detected_header = None
+            detected_info = []
 
-            # 주요 CDN 캐시 응답 헤더 모니터링
-            for header_name in ["x-cache", "cf-cache-status", "x-proxy-cache", "x-cache-hits", "x-served-by", "x-soop-cache", "via"]:
+            # 1. CDN 직접 캐시 헤더 확인 (X-Cache, CF-Cache-Status 등)
+            for header_name in ["x-cache", "cf-cache-status", "x-proxy-cache", "x-cache-hits", "x-soop-cache"]:
                 if header_name in headers_lower:
                     val = headers_lower[header_name].upper()
-                    detected_header = f"{header_name}={headers_lower[header_name]}"
+                    detected_info.append(f"{header_name}={val}")
                     if "HIT" in val:
                         cache_status = "HIT"
                         break
@@ -62,48 +60,64 @@ class CDNCacheMonitor:
                         cache_status = "MISS"
                         break
 
-            # Secondary 체크: Age 헤더 (Age > 0 시 캐시된 것으로 판별)
+            # 2. Age 헤더 확인 (Age > 0 일 때 캐시 HIT)
             if cache_status == "UNKNOWN" and "age" in headers_lower:
                 age_val = headers_lower["age"]
-                detected_header = f"age={age_val}"
+                detected_info.append(f"age={age_val}")
                 if age_val.isdigit() and int(age_val) > 0:
                     cache_status = "HIT"
                 elif age_val == "0":
                     cache_status = "MISS"
 
+            # 3. Cache-Control & ETag 헤더 확인 (캐시 정책 적용 여부)
+            cache_control = headers_lower.get("cache-control", "")
+            etag = headers_lower.get("etag", "")
+            if cache_control:
+                detected_info.append(f"cache-control={cache_control}")
+            if etag:
+                detected_info.append(f"etag={etag[:15]}")
+
+            # HTTP 304 (Not Modified) 수신 시 캐시 HIT
+            if response.get("status") == 304:
+                cache_status = "HIT"
+
             self.records.append({
                 "url": url,
                 "status": response.get("status"),
+                "content_type": headers_lower.get("content-type", ""),
                 "cache_status": cache_status,
-                "header": detected_header,
+                "info": " | ".join(detected_info) if detected_info else "No Cache Headers",
                 "timestamp": time.time()
             })
 
     def get_stats(self) -> dict:
-        """수집된 네트워크 기록 통계 반환"""
+        """수집된 네트워크 세그먼트 패킷 통계 분석"""
         total = len(self.records)
-        hits = sum(1 for r in self.records if r["cache_status"] == "HIT")
-        misses = sum(1 for r in self.records if r["cache_status"] == "MISS")
-        unknowns = sum(1 for r in self.records if r["cache_status"] == "UNKNOWN")
 
-        # 비디오 세그먼트(.ts, .m4s)만 추출한 통계
-        segment_records = [r for r in self.records if any(ext in r["url"].lower() for ext in [".ts", ".m4s"])]
-        seg_total = len(segment_records)
-        seg_hits = sum(1 for r in segment_records if r["cache_status"] == "HIT")
-        seg_misses = sum(1 for r in segment_records if r["cache_status"] == "MISS")
+        # .ts / .m4s 비디오 조각 세그먼트
+        ts_records = [r for r in self.records if ".ts" in r["url"].lower() or ".m4s" in r["url"].lower()]
+        ts_total = len(ts_records)
+        ts_hits = sum(1 for r in ts_records if r["cache_status"] == "HIT")
+        ts_misses = sum(1 for r in ts_records if r["cache_status"] == "MISS")
 
-        ratio = (hits / total * 100) if total > 0 else 0.0
-        seg_ratio = (seg_hits / seg_total * 100) if seg_total > 0 else 0.0
+        # .m3u8 플레이리스트
+        m3u8_records = [r for r in self.records if ".m3u8" in r["url"].lower()]
+        m3u8_total = len(m3u8_records)
+
+        # Cache-Control max-age 가 적용된 캐시 가능 패킷 비율
+        cacheable_count = sum(1 for r in self.records if "max-age" in r["info"].lower())
+
+        ts_hit_ratio = round((ts_hits / ts_total * 100), 2) if ts_total > 0 else 0.0
+        cacheable_ratio = round((cacheable_count / total * 100), 2) if total > 0 else 0.0
 
         return {
-            "total_requests": total,
-            "hit_count": hits,
-            "miss_count": misses,
-            "unknown_count": unknowns,
-            "hit_ratio": round(ratio, 2),
-            "segment_total": seg_total,
-            "segment_hits": seg_hits,
-            "segment_misses": seg_misses,
-            "segment_hit_ratio": round(seg_ratio, 2),
+            "total_media_requests": total,
+            "ts_total": ts_total,
+            "ts_hits": ts_hits,
+            "ts_misses": ts_misses,
+            "ts_hit_ratio": ts_hit_ratio,
+            "m3u8_total": m3u8_total,
+            "cacheable_count": cacheable_count,
+            "cacheable_ratio": cacheable_ratio,
             "records": self.records
         }
