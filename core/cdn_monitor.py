@@ -91,16 +91,31 @@ class StreamNetworkMonitor:
         ts_records = [r for r in self.records if ".ts" in r["url"].lower() or ".m4s" in r["url"].lower()]
         m3u8_records = [r for r in self.records if ".m3u8" in r["url"].lower()]
 
+        # .ts 세그먼트 패킷 간도착 시간(interval) 간격 계산
+        ts_timestamps = [r["timestamp"] for r in ts_records]
+        ts_intervals = [round(ts_timestamps[i] - ts_timestamps[i-1], 2) for i in range(1, len(ts_timestamps))]
+        max_ts_interval = max(ts_intervals) if ts_intervals else 0.0
+
+        # 버퍼링 이상 감지 (패킷 간격이 8초 이상 지연되면 버퍼링으로 간주)
+        if max_ts_interval > 8.0:
+            self.anomalies.append({
+                "type": "BUFFERING_DELAY",
+                "detail": f"비디오 세그먼트 수신 간격이 {max_ts_interval}초 동안 지연됨 (버퍼링 발생)"
+            })
+
         http_errors = [a for a in self.anomalies if a["type"] == "HTTP_ERROR"]
         type_mismatches = [a for a in self.anomalies if a["type"] == "CONTENT_TYPE_MISMATCH"]
+        buffering_errors = [a for a in self.anomalies if a["type"] == "BUFFERING_DELAY"]
         cacheable_count = sum(1 for r in self.records if r["has_cache_header"])
 
         return {
             "total_media_requests": total,
             "ts_total": len(ts_records),
             "m3u8_total": len(m3u8_records),
+            "max_ts_interval": max_ts_interval,
             "http_error_count": len(http_errors),
             "type_mismatch_count": len(type_mismatches),
+            "buffering_error_count": len(buffering_errors),
             "anomaly_count": len(self.anomalies),
             "cacheable_count": cacheable_count,
             "cacheable_ratio": round((cacheable_count / total * 100), 2) if total > 0 else 0.0,

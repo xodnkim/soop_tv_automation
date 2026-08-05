@@ -52,6 +52,7 @@ class TestCDNPerformance(BaseCDNTest):
         print(f" - 수신된 총 미디어 요청 수: {stats['total_media_requests']} 건")
         print(f" - 비디오 세그먼트(.ts) 요청 수: {stats['ts_total']} 건")
         print(f" - HLS 플레이리스트(.m3u8) 요청 수: {stats['m3u8_total']} 건")
+        print(f" - 세그먼트 최대 수신 지연 간격: {stats['max_ts_interval']} 초")
         print(f" - HTTP 4xx/5xx 에러 건수: {stats['http_error_count']} 건")
         print(f" - Content-Type 미스매치 건수: {stats['type_mismatch_count']} 건")
         print(f" - Cache-Control 헤더 적용률: {stats['cacheable_ratio']}%")
@@ -71,6 +72,9 @@ class TestCDNPerformance(BaseCDNTest):
 
         # 3. Content-Type 미스매치 검증 (HTML 에러 페이지 수신 방지)
         assert stats['type_mismatch_count'] == 0, f"Content-Type 미스매치 장애 감지: {stats['anomalies']}"
+
+        # 4. 세그먼트 수신 연속성/버퍼링 검증 (간격이 8초 이상 벌어지면 FAILED)
+        assert stats['buffering_error_count'] == 0, f"비디오 패킷 수신 지연(버퍼링) 감지: {stats['anomalies']}"
 
     def test_cdn_stream_domain_and_manifest_validity(self, driver):
         """
