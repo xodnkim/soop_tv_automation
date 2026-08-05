@@ -1,7 +1,9 @@
 """
 test_cdn_performance.py
 - SOOP TV 스마트 TV 앱 스트림 네트워크 헬스 및 CDN 이상 탐지 테스트 (Stream Network Health & Smoke Suite)
-- CDP Network 도메인을 활용한 트래픽 검증: HTTP 에러(4xx/5xx), Content-Type 미스매치, HLS 세그먼트 수신 상태, CDN 도메인 검증
+- 순서 및 의존성:
+  1단계: CDN 도메인 & HLS 프로토콜 수신 유효성 검증
+  2단계: 미디어 패킷 헬스 및 이상 탐지 (HTTP 에러, Content-Type 미스매치, 버퍼링 지연)
 """
 import time
 import pytest
@@ -34,12 +36,37 @@ class BaseCDNTest:
 
 
 class TestCDNPerformance(BaseCDNTest):
-    def test_live_stream_network_health_and_anomaly_check(self, driver):
+    def test_01_cdn_stream_domain_and_manifest_validity(self, driver):
         """
-        [스트림 네트워크 헬스 검증] LIVE 방송 시청 중 CDP 패킷 분석으로 CDN 무음 에러 및 패킷 이상 감지
+        [1단계: 사전 필수 검증] <video> 태그의 HLS 스트림 URL이 정규 CDN 서버 도메인을 타는지 검증
+        - 정식 CDN 주소 연동이 성공해야 2단계 네트워크 트래픽 분석이 유효함
+        """
+        stream_url = driver.cdp.evaluate(
+            "(function() {"
+            "  var video = document.querySelector('video');"
+            "  if (!video) return '';"
+            "  var src = video.src;"
+            "  if (!src) {"
+            "    var source = video.querySelector('source');"
+            "    src = source ? source.src : '';"
+            "  }"
+            "  return src;"
+            "})()"
+        ) or ""
+
+        print(f"\n[감지된 비디오 스트림 URL] -> {stream_url}")
+
+        assert stream_url != "", "<video> 태그에서 스트림 소스 URL을 추출하지 못했습니다."
+        assert ".m3u8" in stream_url.lower(), f"유효한 HLS 마스터 플레이리스트 경로가 아닙니다: {stream_url}"
+        assert any(domain in stream_url.lower() for domain in ["sooplive.com", "afreecatv.com", "cdn"]), \
+            f"검증되지 않은 CDN 도메인 주소입니다: {stream_url}"
+
+    def test_02_live_stream_network_health_and_anomaly_check(self, driver):
+        """
+        [2단계: 미디어 트래픽 검증] LIVE 방송 시청 중 CDP 패킷 분석으로 CDN 무음 에러 및 패킷 이상 감지
         - HTTP 4xx/5xx 상태 코드 에러 여부
         - Content-Type 미스매치 여부 (CDN 장애 시 HTML 에러 페이지가 200 OK로 수신되는 현상 탐지)
-        - Cache-Control / ETag 헤더 적용률 검증
+        - .ts 비디오 패킷 간격 지연(버퍼링) 여부
         """
         # 10초 추가 시청하며 미디어 세그먼트 수신 추적
         time.sleep(10)
@@ -76,27 +103,3 @@ class TestCDNPerformance(BaseCDNTest):
 
         # 4. 세그먼트 수신 연속성/버퍼링 검증 (간격이 8초 이상 벌어지면 FAILED)
         assert stats['buffering_error_count'] == 0, f"비디오 패킷 수신 지연(버퍼링) 감지: {stats['anomalies']}"
-
-    def test_cdn_stream_domain_and_manifest_validity(self, driver):
-        """
-        [CDN 도메인 검증] <video> 태그의 HLS 스트림 URL이 정규 CDN 서버 도메인을 타는지 검증
-        """
-        stream_url = driver.cdp.evaluate(
-            "(function() {"
-            "  var video = document.querySelector('video');"
-            "  if (!video) return '';"
-            "  var src = video.src;"
-            "  if (!src) {"
-            "    var source = video.querySelector('source');"
-            "    src = source ? source.src : '';"
-            "  }"
-            "  return src;"
-            "})()"
-        ) or ""
-
-        print(f"\n[감지된 비디오 스트림 URL] -> {stream_url}")
-
-        assert stream_url != "", "<video> 태그에서 스트림 소스 URL을 추출하지 못했습니다."
-        assert ".m3u8" in stream_url.lower(), f"유효한 HLS 마스터 플레이리스트 경로가 아닙니다: {stream_url}"
-        assert any(domain in stream_url.lower() for domain in ["sooplive.com", "afreecatv.com", "cdn"]), \
-            f"검증되지 않은 CDN 도메인 주소입니다: {stream_url}"
