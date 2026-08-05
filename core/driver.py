@@ -208,7 +208,9 @@ class SoopDriver:
         self.cdp.send("Input.dispatchKeyEvent", params)
 
     def press_back(self):
-        params = {"type": "keyDown", "windowsVirtualKeyCode": 461, "key": "GoBack", "code": "GoBack"}
+        """리모컨 뒤로가기(Back/Return) 키 전송 (Tizen: 10009 / webOS: 461)"""
+        vk_code = 10009 if config.TV_TYPE == "tizen" else 461
+        params = {"type": "keyDown", "windowsVirtualKeyCode": vk_code, "key": "GoBack", "code": "GoBack"}
         self.cdp.send("Input.dispatchKeyEvent", params)
         params["type"] = "keyUp"
         self.cdp.send("Input.dispatchKeyEvent", params)
