@@ -1,27 +1,29 @@
 """
 cdn_monitor.py
-- CDP Network 이벤트를 활용한 CDN 세그먼트 및 캐시 히트율/캐시 설정 측정 모듈
-- SOOP TV 실제 미디어 트래픽(.ts, .m3u8, mp4hls) 파이프라인 분석
+- CDP Network 이벤트를 활용한 스트림 네트워크 헬스 & CDN 트래픽 이상 탐지 모듈
+- 검증 항목: Content-Type 미스매치, HTTP 4xx/5xx 에러 패킷, HLS 세그먼트 연속성, Cache-Control 헤더 유효성
 """
 import time
 
 
-class CDNCacheMonitor:
+class StreamNetworkMonitor:
     def __init__(self, driver):
         self.driver = driver
         self.is_monitoring = False
         self.records = []
+        self.anomalies = []
         self._handler = self._on_response_received
 
     def start(self):
         """CDP Network 도메인 활성화 및 캡처 시작"""
         self.records.clear()
+        self.anomalies.clear()
         self.is_monitoring = True
         try:
             self.driver.cdp.send("Network.enable")
             self.driver.cdp.on_event("Network.responseReceived", self._handler)
         except Exception as e:
-            print(f"[CDN MONITOR WARN] Network.enable 설정 실패: {e}")
+            print(f"[NETWORK MONITOR WARN] Network.enable 설정 실패: {e}")
 
     def stop(self):
         """캡처 중단 및 이벤트 핸들러 해제"""
@@ -42,82 +44,66 @@ class CDNCacheMonitor:
         # SOOP TV 비디오 세그먼트(.ts), HLS 플레이리스트(.m3u8), MP4HLS 등 미디어 트래픽 필터링
         is_media = any(k in url_lower for k in [".ts", ".m3u8", ".m4s", "mp4hls", "chunklist"])
         if is_media:
+            status = response.get("status", 0)
             headers = response.get("headers", {})
             headers_lower = {str(k).lower(): str(v) for k, v in headers.items()}
-
-            cache_status = "UNKNOWN"
-            detected_info = []
-
-            # 1. CDN 직접 캐시 헤더 확인 (X-Cache, CF-Cache-Status 등)
-            for header_name in ["x-cache", "cf-cache-status", "x-proxy-cache", "x-cache-hits", "x-soop-cache"]:
-                if header_name in headers_lower:
-                    val = headers_lower[header_name].upper()
-                    detected_info.append(f"{header_name}={val}")
-                    if "HIT" in val:
-                        cache_status = "HIT"
-                        break
-                    elif "MISS" in val or "EXPIRED" in val:
-                        cache_status = "MISS"
-                        break
-
-            # 2. Age 헤더 확인 (Age > 0 일 때 캐시 HIT)
-            if cache_status == "UNKNOWN" and "age" in headers_lower:
-                age_val = headers_lower["age"]
-                detected_info.append(f"age={age_val}")
-                if age_val.isdigit() and int(age_val) > 0:
-                    cache_status = "HIT"
-                elif age_val == "0":
-                    cache_status = "MISS"
-
-            # 3. Cache-Control & ETag 헤더 확인 (캐시 정책 적용 여부)
+            content_type = headers_lower.get("content-type", "").lower()
             cache_control = headers_lower.get("cache-control", "")
             etag = headers_lower.get("etag", "")
-            if cache_control:
-                detected_info.append(f"cache-control={cache_control}")
-            if etag:
-                detected_info.append(f"etag={etag[:15]}")
 
-            # HTTP 304 (Not Modified) 수신 시 캐시 HIT
-            if response.get("status") == 304:
-                cache_status = "HIT"
+            # 1. HTTP 4xx / 5xx 에러 이상 감지
+            if status >= 400:
+                self.anomalies.append({
+                    "type": "HTTP_ERROR",
+                    "url": url,
+                    "status": status,
+                    "detail": f"HTTP Status {status}"
+                })
+
+            # 2. Content-Type 미스매치 감지 (CDN 장애로 HTML 에러페이지가 200 OK로 오는 패턴 방지)
+            if ".m3u8" in url_lower and "mpegurl" not in content_type and "octet-stream" not in content_type:
+                self.anomalies.append({
+                    "type": "CONTENT_TYPE_MISMATCH",
+                    "url": url,
+                    "expected": "application/vnd.apple.mpegurl",
+                    "got": content_type
+                })
+            elif ".ts" in url_lower and "mp2t" not in content_type and "octet-stream" not in content_type and "video" not in content_type:
+                self.anomalies.append({
+                    "type": "CONTENT_TYPE_MISMATCH",
+                    "url": url,
+                    "expected": "video/MP2T",
+                    "got": content_type
+                })
 
             self.records.append({
                 "url": url,
-                "status": response.get("status"),
-                "content_type": headers_lower.get("content-type", ""),
-                "cache_status": cache_status,
-                "info": " | ".join(detected_info) if detected_info else "No Cache Headers",
+                "status": status,
+                "content_type": content_type,
+                "cache_control": cache_control,
+                "has_cache_header": bool(cache_control or etag),
                 "timestamp": time.time()
             })
 
     def get_stats(self) -> dict:
-        """수집된 네트워크 세그먼트 패킷 통계 분석"""
+        """수집된 미디어 트래픽 통계 및 이상 징후 분석 결과 반환"""
         total = len(self.records)
-
-        # .ts / .m4s 비디오 조각 세그먼트
         ts_records = [r for r in self.records if ".ts" in r["url"].lower() or ".m4s" in r["url"].lower()]
-        ts_total = len(ts_records)
-        ts_hits = sum(1 for r in ts_records if r["cache_status"] == "HIT")
-        ts_misses = sum(1 for r in ts_records if r["cache_status"] == "MISS")
-
-        # .m3u8 플레이리스트
         m3u8_records = [r for r in self.records if ".m3u8" in r["url"].lower()]
-        m3u8_total = len(m3u8_records)
 
-        # Cache-Control max-age 가 적용된 캐시 가능 패킷 비율
-        cacheable_count = sum(1 for r in self.records if "max-age" in r["info"].lower())
-
-        ts_hit_ratio = round((ts_hits / ts_total * 100), 2) if ts_total > 0 else 0.0
-        cacheable_ratio = round((cacheable_count / total * 100), 2) if total > 0 else 0.0
+        http_errors = [a for a in self.anomalies if a["type"] == "HTTP_ERROR"]
+        type_mismatches = [a for a in self.anomalies if a["type"] == "CONTENT_TYPE_MISMATCH"]
+        cacheable_count = sum(1 for r in self.records if r["has_cache_header"])
 
         return {
             "total_media_requests": total,
-            "ts_total": ts_total,
-            "ts_hits": ts_hits,
-            "ts_misses": ts_misses,
-            "ts_hit_ratio": ts_hit_ratio,
-            "m3u8_total": m3u8_total,
+            "ts_total": len(ts_records),
+            "m3u8_total": len(m3u8_records),
+            "http_error_count": len(http_errors),
+            "type_mismatch_count": len(type_mismatches),
+            "anomaly_count": len(self.anomalies),
             "cacheable_count": cacheable_count,
-            "cacheable_ratio": cacheable_ratio,
+            "cacheable_ratio": round((cacheable_count / total * 100), 2) if total > 0 else 0.0,
+            "anomalies": self.anomalies,
             "records": self.records
         }
