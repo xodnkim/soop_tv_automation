@@ -27,6 +27,18 @@ def pytest_runtest_makereport(item, call):
     outcome = yield
     rep = outcome.get_result()
     setattr(item, f"rep_{rep.when}", rep)
+    
+    if rep.when == "call" and rep.failed:
+        test_name = item.name
+        print(f"\n[TEST FAILED] {test_name}")
+        if _global_recorder and _global_recorder.last_frame is not None:
+            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+            safe_name = test_name.replace("/", "_")
+            fail_path = os.path.join(config.SCREENSHOT_DIR, f"FAIL_{safe_name}_{ts}.png")
+            cv2.imwrite(fail_path, _global_recorder.last_frame)
+            print(f"[FAIL SCREENSHOT] -> {fail_path}")
+    elif rep.when == "call" and rep.passed:
+        print(f"\n[TEST PASSED] {item.name}")
 
 @pytest.fixture(scope="session")
 def driver():
@@ -65,8 +77,8 @@ def _soft_reset_to_home(driver):
                     break
             except Exception:
                 pass
-        # 세션 복원(local storage → 니켌네임 버튼 갱신)이 완료될 때까지 추가 대기
-        time.sleep(2)
+        # 세션 복원(local storage → 닉네임 버튼 갱신)이 완료될 때까지 추가 대기
+        time.sleep(5)
     except Exception as e:
         print(f"[SOFT RESET WARN] {e}")
         time.sleep(3)  # 실패 시 fallback
@@ -140,25 +152,7 @@ def record_full_session(driver):
         _global_recorder.stop()
         print(f"\n[녹화 완료] -> {video_path}")
 
-@pytest.fixture(autouse=True)
-def handle_test_report(request, driver):
-    test_name = request.node.name
-    print(f"\n[TEST START] {test_name}")
-    yield
-    failed = any(
-        getattr(request.node, phase, None) and getattr(request.node, phase).failed
-        for phase in ("rep_setup", "rep_call", "rep_teardown")
-    )
-    if failed:
-        print(f"[TEST FAILED] {test_name}")
-        if _global_recorder and _global_recorder.last_frame is not None:
-            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-            safe_name = test_name.replace("/", "_")
-            fail_path = os.path.join(config.SCREENSHOT_DIR, f"FAIL_{safe_name}_{ts}.png")
-            cv2.imwrite(fail_path, _global_recorder.last_frame)
-            print(f"[FAIL SCREENSHOT] -> {fail_path}")
-    else:
-        print(f"[TEST PASSED] {test_name}")
+# (스크린샷 기능은 pytest_runtest_makereport 내부로 통합하여 정확한 타이밍 보장)
 
 def pytest_sessionfinish(session, exitstatus):
     """모든 테스트 세션이 종료되면 잔여 자식 프로세스/스레드를 깔끔하게 정리"""

@@ -30,10 +30,6 @@ class HomePage(BasePage):
     BTN_VOD_MORE        = '//button[normalize-space()="인기 업로드 VOD 더보기"]'
     BTN_REPLAY_MORE     = '//button[normalize-space()="인기 다시보기 더보기"]'
 
-    # ---- 콘텐츠 카드 (각 섹션의 첫 번째 항목) ----
-    FIRST_LIVE_CARD     = '(//button[contains(@class,"kGpOLI")])[1]'
-    FIRST_CLIP_CARD     = '(//button[normalize-space()="인기 유저 클립 더보기"]//preceding-sibling::button[contains(@class,"kGpOLI")])[last()]'
-
     # ==== is_loaded ====
     def is_loaded(self, timeout: float = 10) -> bool:
         return self.driver.is_visible(self.HOME_LABEL, timeout=timeout)
@@ -43,26 +39,21 @@ class HomePage(BasePage):
 
     # ==== 로그인 상태 확인 ====
     def is_logged_in(self, timeout: float = 15) -> bool:
-        """로그인 성공 여부: 상단 첫 번째 버튼이 '로그인' 텍스트가 아니면 로그인된 상태"""
         import time
         deadline = time.time() + timeout
         while time.time() < deadline:
             text = self.driver.text_of(self.BTN_LOGIN)
             if text and text.strip() != '로그인':
                 return True
-            # '로그인' 버튼 자체가 사라진 경우 (DOM 교체)
             if not self.driver.is_visible(self.BTN_LOGIN, timeout=1):
                 return True
             time.sleep(0.5)
         return False
 
-    # ==== 로그인 버튼 여부 ====
     def is_login_button_visible(self, timeout: float = 3) -> bool:
-        """로그인 버튼('로그인' 텍스트) 표시 여부 - 짧은 타임아웃으로 상태 빠르게 판단"""
         return self.driver.is_visible(self.BTN_LOGIN, timeout=timeout)
 
     def is_logged_out(self, timeout: float = 5) -> bool:
-        """로그인 버튼이 '로그인' 텍스트인지 확인 (timeout 내에 '로그인' 버튼이 나타나야 True)"""
         import time
         deadline = time.time() + timeout
         while time.time() < deadline:
@@ -72,8 +63,81 @@ class HomePage(BasePage):
             time.sleep(0.3)
         return False
 
+    # ==== 사이드바 메뉴 클릭 헬퍼 (방향키 기반) ====
+    def _click_sidebar_menu(self, target_text: str) -> bool:
+        import time
+        # 1. 왼쪽 방향키로 사이드바 영역 진입 시도
+        for _ in range(3):
+            self.driver.press_left()
+            time.sleep(0.5)
+            
+            focused_text = self.driver.cdp.evaluate("document.activeElement ? document.activeElement.textContent : ''")
+            if focused_text and any(m in focused_text for m in ["로그인", "검색", "홈", "LIVE", "VOD", "e스포츠", "MY", "설정"]):
+                break
+                
+        menu_order = ["로그인", "검색", "홈", "LIVE", "VOD", "e스포츠", "MY", "설정"]
+        
+        # 2. 위아래 방향키로 타겟 메뉴 찾기
+        for _ in range(15):
+            focused_text = self.driver.cdp.evaluate("document.activeElement ? document.activeElement.textContent : ''")
+            if not focused_text:
+                focused_text = ""
+                
+            if target_text == focused_text.strip():
+                self.driver.press_enter()
+                time.sleep(1)
+                return True
+                
+            current_idx = -1
+            target_idx = menu_order.index(target_text) if target_text in menu_order else -1
+            
+            for i, m in enumerate(menu_order):
+                if m == focused_text.strip():
+                    current_idx = i
+                    break
+                    
+            if current_idx == -1:
+                # 사이드바 요소가 아니면 무조건 Down 해봄
+                self.driver.press_down()
+            elif current_idx < target_idx:
+                self.driver.press_down()
+            else:
+                self.driver.press_up()
+                
+            time.sleep(0.5)
+            
+        return False
+
     def click_login(self) -> bool:
-        return self.driver.click(self.BTN_LOGIN)
+        return self._click_sidebar_menu("로그인")
+
+    def click_live_menu(self) -> bool:
+        return self._click_sidebar_menu("LIVE")
+
+    def click_vod_menu(self) -> bool:
+        return self._click_sidebar_menu("VOD")
+
+    def click_esports_menu(self) -> bool:
+        return self._click_sidebar_menu("e스포츠")
+
+    def click_my_menu(self) -> bool:
+        return self._click_sidebar_menu("MY")
+
+    def click_settings_menu(self) -> bool:
+        return self._click_sidebar_menu("설정")
+
+    def click_fourth_top_menu(self) -> bool:
+        return self._click_sidebar_menu("LIVE")
+
+    def click_search(self) -> bool:
+        return self._click_sidebar_menu("검색")
+
+    def open_search(self):
+        self.click_search()
+        from pages.search_page import SearchPage
+        search = SearchPage(self.driver)
+        search.wait_until_loaded(timeout=10)
+        return search
 
     # ==== 섹션 표시 여부 ====
     def is_live_section_visible(self) -> bool:
@@ -87,34 +151,6 @@ class HomePage(BasePage):
 
     def is_replay_section_visible(self) -> bool:
         return bool(self.driver.find(self.REPLAY_SECTION_TITLE, scroll_into_view=True))
-
-    # ==== 메뉴 이동 ====
-    def click_live_menu(self) -> bool:
-        return self.driver.click(self.BTN_LIVE)
-
-    def click_vod_menu(self) -> bool:
-        return self.driver.click(self.BTN_VOD)
-
-    def click_esports_menu(self) -> bool:
-        return self.driver.click(self.BTN_ESPORTS)
-
-    def click_my_menu(self) -> bool:
-        return self.driver.click(self.BTN_MY)
-
-    def click_settings_menu(self) -> bool:
-        return self.driver.click(self.BTN_SETTINGS)
-
-    def click_fourth_top_menu(self) -> bool:
-        """4번째 탭 (LIVE) 클릭"""
-        return self.driver.click(self.BTN_LIVE)
-
-    # ==== 검색 진입 ====
-    def open_search(self):
-        self.driver.click(self.BTN_SEARCH)
-        from pages.search_page import SearchPage
-        search = SearchPage(self.driver)
-        search.wait_until_loaded(timeout=10)
-        return search
 
     # ==== 더보기 버튼 ====
     def click_live_more(self) -> bool:

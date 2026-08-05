@@ -142,6 +142,36 @@ class SoopDriver:
         self.press_enter()
         return True
 
+    def mouse_click(self, xpath: str, timeout: float = config.ELEMENT_WAIT_TIMEOUT) -> bool:
+        """CDP Input.dispatchMouseEvent를 사용하여 마우스 클릭 시뮬레이션"""
+        info = self.find(xpath, timeout=timeout, scroll_into_view=True, highlight=True)
+        if not (info and info.get("found")):
+            return False
+
+        xpath_js = json.dumps(xpath)
+        coord_js = f"""
+        (function() {{
+            var el = document.evaluate({xpath_js}, document, null,
+                                        XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+            if(!el) return null;
+            var rect = el.getBoundingClientRect();
+            return {{x: rect.left + rect.width/2, y: rect.top + rect.height/2}};
+        }})()
+        """
+        coord = self.cdp.evaluate(coord_js)
+        if isinstance(coord, dict) and 'x' in coord:
+            x, y = coord['x'], coord['y']
+            self.cdp.send("Input.dispatchMouseEvent", {
+                "type": "mousePressed", "x": x, "y": y, "button": "left", "clickCount": 1
+            })
+            import time
+            time.sleep(0.05)
+            self.cdp.send("Input.dispatchMouseEvent", {
+                "type": "mouseReleased", "x": x, "y": y, "button": "left", "clickCount": 1
+            })
+            return True
+        return False
+
     def type_text(self, xpath: str, text: str, timeout: float = config.ELEMENT_WAIT_TIMEOUT):
         """React 컨트롤드 인풋 대응: 네이티브 setter로 값 주입 + input/change 이벤트 강제 발생"""
         info = self.find(xpath, timeout=timeout, scroll_into_view=True, highlight=True)
@@ -169,6 +199,36 @@ class SoopDriver:
     def press_enter(self):
         """리모컨 확인(OK) 버튼과 동일한 Enter 키 이벤트 전송"""
         params = {"type": "keyDown", "windowsVirtualKeyCode": 13, "key": "Enter", "code": "Enter"}
+        self.cdp.send("Input.dispatchKeyEvent", params)
+        params["type"] = "keyUp"
+        self.cdp.send("Input.dispatchKeyEvent", params)
+
+    def press_back(self):
+        params = {"type": "keyDown", "windowsVirtualKeyCode": 461, "key": "GoBack", "code": "GoBack"}
+        self.cdp.send("Input.dispatchKeyEvent", params)
+        params["type"] = "keyUp"
+        self.cdp.send("Input.dispatchKeyEvent", params)
+
+    def press_left(self):
+        params = {"type": "keyDown", "windowsVirtualKeyCode": 37, "key": "ArrowLeft", "code": "ArrowLeft"}
+        self.cdp.send("Input.dispatchKeyEvent", params)
+        params["type"] = "keyUp"
+        self.cdp.send("Input.dispatchKeyEvent", params)
+
+    def press_up(self):
+        params = {"type": "keyDown", "windowsVirtualKeyCode": 38, "key": "ArrowUp", "code": "ArrowUp"}
+        self.cdp.send("Input.dispatchKeyEvent", params)
+        params["type"] = "keyUp"
+        self.cdp.send("Input.dispatchKeyEvent", params)
+
+    def press_right(self):
+        params = {"type": "keyDown", "windowsVirtualKeyCode": 39, "key": "ArrowRight", "code": "ArrowRight"}
+        self.cdp.send("Input.dispatchKeyEvent", params)
+        params["type"] = "keyUp"
+        self.cdp.send("Input.dispatchKeyEvent", params)
+
+    def press_down(self):
+        params = {"type": "keyDown", "windowsVirtualKeyCode": 40, "key": "ArrowDown", "code": "ArrowDown"}
         self.cdp.send("Input.dispatchKeyEvent", params)
         params["type"] = "keyUp"
         self.cdp.send("Input.dispatchKeyEvent", params)

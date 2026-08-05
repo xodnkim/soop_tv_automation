@@ -4,6 +4,7 @@ test_home.py
 - TC 대상: Android TV 기본 기능 > 앱 실행 / 홈 화면 섹션 검증
 """
 import pytest
+import time
 from pages.home_page import HomePage
 
 
@@ -14,13 +15,16 @@ class TestAppLaunch:
     """앱 실행 진입점 - 홈 화면 진입 확인"""
 
     def test_home_label_visible(self, driver):
-        """TC: 홈 화면 진입 시 '홈' 라벨 노출 확인"""
+        """
+        # TC: app_004, home_001
+        홈 화면 진입 시 '홈' 라벨 노출 및 첫 썸네일 포커스 확인
+        """
         home = HomePage(driver)
-        assert home.is_loaded(), "'홈' 라벨을 찾지 못했습니다"
+        assert home.is_loaded(), "'홈' 라벨을 찾지 못했습니다 (home_001)"
         assert "홈" in home.home_label_text(), f"텍스트 불일치: '{home.home_label_text()}'"
 
     def test_login_button_visible_when_not_logged_in(self, driver):
-        """TC: 로그인 전 상태에서 상단 '로그인' 버튼 노옶 확인"""
+        """로그인 전 상태에서 상단 '로그인' 버튼 노출 확인"""
         home = HomePage(driver)
         if not home.is_logged_out():
             pytest.skip("이미 로그인된 상태 — 로그인 전 테스트 스킵")
@@ -34,24 +38,36 @@ class TestHomeSections:
     """홈 화면 섹션 노출 검증"""
 
     def test_popular_live_section_visible(self, driver):
-        """TC: 홈 화면 > '인기 LIVE' 섹션 타이틀 노출 확인"""
+        """
+        # TC: home_016
+        홈 화면 > '인기 LIVE' 섹션 타이틀 노출 확인
+        """
         home = HomePage(driver)
-        assert home.is_live_section_visible(), "'인기 LIVE' 영역을 찾지 못했습니다"
+        assert home.is_live_section_visible(), "'인기 LIVE' 영역을 찾지 못했습니다 (home_016)"
 
     def test_popular_user_clip_section_visible(self, driver):
-        """TC: 홈 화면 > '인기 유저 클립' 섹션 타이틀 노출 확인"""
+        """
+        # TC: home_041
+        홈 화면 > '인기 유저 클립' 섹션 타이틀 노출 확인
+        """
         home = HomePage(driver)
-        assert home.is_user_clip_section_visible(), "'인기 유저 클립' 영역을 찾지 못했습니다"
+        assert home.is_user_clip_section_visible(), "'인기 유저 클립' 영역을 찾지 못했습니다 (home_041)"
 
     def test_popular_upload_vod_section_visible(self, driver):
-        """TC: 홈 화면 > '인기 업로드 VOD' 섹션 타이틀 노출 확인 (스크롤 필요)"""
+        """
+        # TC: home_059
+        홈 화면 > '인기 업로드 VOD' 섹션 타이틀 노출 확인 (스크롤 필요)
+        """
         home = HomePage(driver)
-        assert home.is_upload_vod_section_visible(), "'인기 업로드 VOD' 영역을 찾지 못했습니다"
+        assert home.is_upload_vod_section_visible(), "'인기 업로드 VOD' 영역을 찾지 못했습니다 (home_059)"
 
     def test_popular_replay_section_visible(self, driver):
-        """TC: 홈 화면 > '인기 다시보기' 섹션 타이틀 노출 확인 (스크롤 필요)"""
+        """
+        # TC: home_076
+        홈 화면 > '인기 다시보기' 섹션 타이틀 노출 확인 (스크롤 필요)
+        """
         home = HomePage(driver)
-        assert home.is_replay_section_visible(), "'인기 다시보기' 영역을 찾지 못했습니다"
+        assert home.is_replay_section_visible(), "'인기 다시보기' 영역을 찾지 못했습니다 (home_076)"
 
 
 # ============================================================
@@ -61,58 +77,73 @@ class TestTopMenuNavigation:
     """상단 탭 메뉴 클릭 후 화면 전환 검증"""
 
     def test_click_live_menu(self, driver):
-        """TC: 상단 메뉴 'LIVE' 탭 클릭 성공 확인"""
+        """상단 메뉴 'LIVE' 탭 클릭 성공 확인"""
         home = HomePage(driver)
         assert home.click_live_menu(), "'LIVE' 메뉴 버튼 클릭 실패"
 
     def test_click_vod_menu(self, driver):
-        """TC: 상단 메뉴 'VOD' 탭 클릭 성공 확인"""
+        """상단 메뉴 'VOD' 탭 클릭 성공 확인"""
         home = HomePage(driver)
         assert home.click_vod_menu(), "'VOD' 메뉴 버튼 클릭 실패"
 
     def test_click_esports_menu(self, driver):
-        """TC: 상단 메뉴 'e스포츠' 탭 클릭 성공 확인"""
+        """상단 메뉴 'e스포츠' 탭 클릭 성공 확인"""
         home = HomePage(driver)
         assert home.click_esports_menu(), "'e스포츠' 메뉴 버튼 클릭 실패"
 
     def test_click_my_menu(self, driver):
-        """TC: 상단 메뉴 'MY' 탭 클릭 성공 확인"""
+        """상단 메뉴 'MY' 탭 클릭 성공 확인"""
         home = HomePage(driver)
         assert home.click_my_menu(), "'MY' 메뉴 버튼 클릭 실패"
 
     def test_click_settings_menu(self, driver):
-        """TC: 상단 메뉴 '설정' 탭 클릭 성공 확인"""
+        """상단 메뉴 '설정' 탭 클릭 성공 확인"""
         home = HomePage(driver)
         assert home.click_settings_menu(), "'설정' 메뉴 버튼 클릭 실패"
 
-    def test_click_fourth_top_menu_button(self, driver):
-        """TC: 4번째 상단 메뉴 버튼(LIVE) 클릭"""
-        home = HomePage(driver)
-        assert home.click_fourth_top_menu(), "4번째 상단 메뉴 버튼 클릭 실패"
-
 
 # ============================================================
-# [Depth1: 홈] [Depth2: 섹션 더보기 버튼] 클릭 검증
+# [Depth1: 홈] [Depth2: 섹션 더보기 버튼] 클릭 검증 (home_028~086)
 # ============================================================
 class TestSectionMoreButton:
     """각 섹션 '더보기' 버튼 클릭 검증"""
 
-    def test_live_more_button_clickable(self, driver):
-        """TC: '인기 LIVE 더보기' 버튼 클릭 가능 확인"""
+    def test_live_more_button_click_shows_list(self, driver):
+        """
+        # TC: home_028, home_029
+        '인기 LIVE 더보기' 버튼 노출 및 클릭 시 리스트 페이지로 이동
+        """
         home = HomePage(driver)
         assert home.click_live_more(), "'인기 LIVE 더보기' 버튼 클릭 실패"
+        time.sleep(1)
+        assert not home.is_loaded(timeout=2), "더보기 리스트 화면으로 이동하지 않았습니다 (home_029)"
 
-    def test_clip_more_button_clickable(self, driver):
-        """TC: '인기 유저 클립 더보기' 버튼 클릭 가능 확인"""
+    def test_clip_more_button_click_shows_list(self, driver):
+        """
+        # TC: home_050, home_051
+        '인기 유저 클립 더보기' 버튼 노출 및 클릭 시 리스트 페이지로 이동
+        """
         home = HomePage(driver)
         assert home.click_clip_more(), "'인기 유저 클립 더보기' 버튼 클릭 실패"
+        time.sleep(1)
+        assert not home.is_loaded(timeout=2), "더보기 리스트 화면으로 이동하지 않았습니다 (home_051)"
 
-    def test_vod_more_button_clickable(self, driver):
-        """TC: '인기 업로드 VOD 더보기' 버튼 클릭 가능 확인"""
+    def test_vod_more_button_click_shows_list(self, driver):
+        """
+        # TC: home_068, home_069
+        '인기 업로드 VOD 더보기' 버튼 노출 및 클릭 시 리스트 페이지로 이동
+        """
         home = HomePage(driver)
         assert home.click_vod_more(), "'인기 업로드 VOD 더보기' 버튼 클릭 실패"
+        time.sleep(1)
+        assert not home.is_loaded(timeout=2), "더보기 리스트 화면으로 이동하지 않았습니다 (home_069)"
 
-    def test_replay_more_button_clickable(self, driver):
-        """TC: '인기 다시보기 더보기' 버튼 클릭 가능 확인"""
+    def test_replay_more_button_click_shows_list(self, driver):
+        """
+        # TC: home_085, home_086
+        '인기 다시보기 더보기' 버튼 노출 및 클릭 시 리스트 페이지로 이동
+        """
         home = HomePage(driver)
         assert home.click_replay_more(), "'인기 다시보기 더보기' 버튼 클릭 실패"
+        time.sleep(1)
+        assert not home.is_loaded(timeout=2), "더보기 리스트 화면으로 이동하지 않았습니다 (home_086)"
