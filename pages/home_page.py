@@ -164,3 +164,16 @@ class HomePage(BasePage):
 
     def click_replay_more(self) -> bool:
         return self.driver.click(self.BTN_REPLAY_MORE)
+
+    # ==== 방송 탐색 헬퍼 (POM) ====
+    def find_and_enter_broadcast(self, target_title: str, max_attempts: int = 15) -> bool:
+        """홈 화면에서 리모컨 우측 방향키로 포커스를 이동시키며 지정된 방송을 찾아 엔터 진입"""
+        import time
+        for _ in range(max_attempts):
+            html = self.driver.cdp.evaluate("document.activeElement.outerHTML") or ""
+            if target_title in html:
+                self.driver.press_enter()
+                return True
+            self.driver.press_right()
+            time.sleep(1.0)
+        return False

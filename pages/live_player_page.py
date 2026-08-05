@@ -5,7 +5,7 @@ class LivePlayerPage(BasePage):
     """LIVE 플레이어 객체"""
     
     # ---- 기본 UI ----
-    PLAYER_VIDEO            = '//video | //*[contains(@class,"player")]'
+    PLAYER_VIDEO            = '//video'
     AD_VIDEO_XPATH          = '/html/body/div/main/div/div/div/div/div/div[1]/div/video'
     CHAT_UI                 = '/html/body/div/main/div/div/div/div[2]'
     
@@ -37,21 +37,20 @@ class LivePlayerPage(BasePage):
         if not is_ad:
             return True # 광고 아님, 바로 본방송 진입 성공
             
-        # 2. 광고가 실행 중이라면 최소 16초 대기
-        time.sleep(16)
-        
-        # 3. 16초 후 "광고 SKIP" 버튼 클릭 시도 (최대 10초 더 탐색)
+        # 2. 광고 스마트 폴링 대기: 16초 대기 대신 SKIP 버튼 또는 광고 비디오 소멸 감지 (최대 30초)
         skip_btn_xpath = '//*[@id="root"]/main/div/div/div/div/div/div[2]/div[2]/button'
-        start_time = time.time()
-        while time.time() - start_time < 10:
-            if self.driver.is_visible(skip_btn_xpath, timeout=1):
+        deadline = time.time() + 30
+        while time.time() < deadline:
+            if self.driver.is_visible(skip_btn_xpath, timeout=0.5):
                 self.driver.click(skip_btn_xpath)
                 time.sleep(2)
                 break
                 
-            if not self.driver.is_visible(self.AD_VIDEO_XPATH, timeout=1):
+            if not self.driver.is_visible(self.AD_VIDEO_XPATH, timeout=0.5):
                 break # 광고 비디오가 사라지면 광고 종료로 간주
                 
+            time.sleep(0.5)
+            
         time.sleep(2)
         return True
         
@@ -125,14 +124,14 @@ class LivePlayerPage(BasePage):
         return self.driver.is_visible(self.LIVE_BADGE, timeout=3)
         
     def is_up_checked(self) -> bool:
-        # UP이 눌렸는지 버튼 상태로 판별
-        return bool(self.driver.find('//button[normalize-space()="UP" and @aria-pressed="true"]'))
+        # UP이 눌렸는지 버튼 상태로 판별 (is_visible로 정확히 검증)
+        return self.driver.is_visible('//button[normalize-space()="UP" and @aria-pressed="true"]', timeout=3)
         
     def is_favorite_checked(self) -> bool:
-        return bool(self.driver.find('//button[normalize-space()="즐겨찾기" and @aria-pressed="true"]'))
+        return self.driver.is_visible('//button[normalize-space()="즐겨찾기" and @aria-pressed="true"]', timeout=3)
         
     def is_watch_later_checked(self) -> bool:
-        return bool(self.driver.find('//button[normalize-space()="나중에 보기" and @aria-pressed="true"]'))
+        return self.driver.is_visible('//button[normalize-space()="나중에 보기" and @aria-pressed="true"]', timeout=3)
 
     def is_streamer_vod_list_visible(self) -> bool:
         return self.driver.is_visible('//*[contains(normalize-space(),"VOD")]', timeout=3)

@@ -23,18 +23,7 @@ def _enter_live_broadcast(driver):
     home.is_loaded(timeout=10)
     time.sleep(3)  # 방송 리스트 렌더링 대기
 
-    target_title = "궈가입니"  # 부분 일치 (오타 방어)
-    found = False
-    for _ in range(15):
-        html = driver.cdp.evaluate("document.activeElement.outerHTML") or ""
-        if target_title in html:
-            driver.press_enter()
-            found = True
-            break
-        driver.press_right()
-        time.sleep(1.0)
-
-    if not found:
+    if not home.find_and_enter_broadcast("궈가입니", max_attempts=15):
         pytest.fail("지정한 방송으로 포커스를 이동할 수 없습니다.")
 
     time.sleep(3)
